@@ -14,6 +14,7 @@ function App() {
 	const [authors, setAuthors] = useState(getAuthors());
 	const [coursesItem, setCoursesItem] = useState(getCources());
 	const [allCoursesItem, setAllCoursesItem] = useState(getCources());
+	const [isRegistration, setIsRegistration] = useState(true);
 
 	function onCreateNewCourse(newCourse) {
 		const tempArray = [...coursesItem, newCourse[0]];
@@ -62,11 +63,7 @@ function App() {
 	function getCources() {
 		return mockedCoursesList;
 	}
-
-	return (
-		<div>
-			<Header />
-			{isShowCreateCourse ? (
+	/*{isShowCreateCourse ? (
 				<CreateCourse
 					itemAuthors={authors}
 					changeIsShowCreateCourse={changeIsShowCreateCourse}
@@ -80,10 +77,11 @@ function App() {
 					changeIsShowCreateCourse={changeIsShowCreateCourse}
 					onSearchCourses={onSearchCourses}
 				/>
-			)}
-			<CourseInfo />
-			<Registration />
-			<Login />
+			)}*/
+	return (
+		<div>
+			<Header isRegistration={isRegistration} />
+			{isRegistration && <Registration />}
 		</div>
 	);
 }

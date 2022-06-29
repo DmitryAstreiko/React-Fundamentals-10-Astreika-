@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../../App.css';
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Inpit';
+import { Link } from 'react-router-dom';
 
 function Registration() {
 	const [nameUser, setNameUser] = useState(null);
@@ -58,7 +59,10 @@ function Registration() {
 				</p>
 				<p style={{ textAlign: 'center' }}>
 					<label>
-						If you have an account you can <b>Login</b>
+						If you have an account you can{' '}
+						<b>
+							<Link to='/login'>Login</Link>
+						</b>
 					</label>
 				</p>
 			</form>

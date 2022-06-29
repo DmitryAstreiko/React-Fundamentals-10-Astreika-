@@ -11,11 +11,11 @@ function Input(props) {
 
 	return (
 		<div className='InputMain'>
-			<label for='searchIput' style={{ padding: '0 0 0 10px' }}>
+			<label for={props.name} style={{ padding: '0 0 0 10px' }}>
 				{props.name}
 			</label>
 			<input
-				id='searchIput'
+				id={props.name}
 				className='Inputs'
 				value={inputValue}
 				name={props.name}
