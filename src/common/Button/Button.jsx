@@ -3,7 +3,11 @@ import '../../App.css';
 
 function Button(props) {
 	return (
-		<button className='Buttons' onClick={() => props.onButtonPress(props.id)}>
+		<button
+			className='Buttons'
+			type={props.type}
+			onClick={() => props.onButtonPress(props.id)}
+		>
 			{props.buttonText}
 		</button>
 	);

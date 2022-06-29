@@ -26,7 +26,7 @@ function CourseCard(props) {
 				</div>
 				<div className='CourseCardName'>
 					<div>
-						<Button buttonText='Show course' />
+						<Button buttonText='Show course' type='button' />
 					</div>
 				</div>
 			</div>

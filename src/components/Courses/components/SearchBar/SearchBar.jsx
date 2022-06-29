@@ -17,9 +17,13 @@ function SearchBar(props) {
 	return (
 		<div className='SearchBarMain'>
 			<div style={{ width: '40%' }}>
-				<Input placeholderText='Enter course name...' onChange={onInputText} />
+				<Input
+					placeholderText='Enter course name...'
+					onChange={onInputText}
+					type='text'
+				/>
 			</div>
-			<Button buttonText='Search' onButtonPress={onSearch} />
+			<Button buttonText='Search' onButtonPress={onSearch} type='button' />
 		</div>
 	);
 }

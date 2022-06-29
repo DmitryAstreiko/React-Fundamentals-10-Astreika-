@@ -21,9 +21,17 @@ function AddAuthor(props) {
 				<b>Add author</b>
 			</label>
 			<label className='CreateCourseLabels'>Author name</label>
-			<Input placeholderText='Enter author name...' onChange={onInputText} />
+			<Input
+				placeholderText='Enter author name...'
+				onChange={onInputText}
+				type='text'
+			/>
 			<div style={{ textAlign: 'center' }}>
-				<Button buttonText='Create author' onButtonPress={addAuthor} />
+				<Button
+					buttonText='Create author'
+					onButtonPress={addAuthor}
+					type='button'
+				/>
 			</div>
 		</div>
 	);

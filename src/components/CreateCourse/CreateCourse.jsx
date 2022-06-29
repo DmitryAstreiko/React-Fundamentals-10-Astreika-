@@ -96,13 +96,22 @@ function CreateCourse(props) {
 		<div className='CreateCourseMain'>
 			<label className='CreateCourseLabels'>Title</label>
 			<div className='CreateCourseTitle'>
-				<Input placeholderText='Enter title...' onChange={onInputText} />
+				<Input
+					placeholderText='Enter title...'
+					type='text'
+					onChange={onInputText}
+				/>
 				<div className='CreateCourseButtons'>
 					<Button
 						buttonText='Cancel adding'
 						onButtonPress={changeShowCreateCourse}
+						type='button'
 					/>
-					<Button buttonText='Create course' onButtonPress={onCreateCourse} />
+					<Button
+						buttonText='Create course'
+						onButtonPress={onCreateCourse}
+						type='button'
+					/>
 				</div>
 			</div>
 			<label className='CreateCourseLabels'>Description</label>

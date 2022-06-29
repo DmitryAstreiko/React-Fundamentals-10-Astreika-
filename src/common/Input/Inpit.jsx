@@ -11,15 +11,19 @@ function Input(props) {
 
 	return (
 		<div className='InputMain'>
+			<label for='searchIput' style={{ padding: '0 0 0 10px' }}>
+				{props.name}
+			</label>
 			<input
 				id='searchIput'
 				className='Inputs'
 				value={inputValue}
+				name={props.name}
+				type={props.type}
 				placeholder={props.placeholderText}
 				//onChange={(event) => setInputValue(event.target.value)}
 				onChange={(event) => onHandleClick(event.target.value)}
 			/>
-			<label for='searchIput'>{props.labelText}</label>
 		</div>
 	);
 }

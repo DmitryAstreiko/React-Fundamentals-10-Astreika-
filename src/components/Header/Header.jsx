@@ -11,7 +11,7 @@ function Header() {
 				<label style={{ margin: '0 50px 0 0' }}>
 					<b>Dzmitry</b>
 				</label>
-				<Button buttonText='Logout' />
+				<Button buttonText='Logout' type='button' />
 			</div>
 		</div>
 	);

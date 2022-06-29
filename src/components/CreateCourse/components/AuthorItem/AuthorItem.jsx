@@ -14,6 +14,7 @@ function AuthorItem(props) {
 				id={props.id}
 				buttonText={props.ButtonName}
 				onButtonPress={onPress}
+				type='button'
 			/>
 		</div>
 	);

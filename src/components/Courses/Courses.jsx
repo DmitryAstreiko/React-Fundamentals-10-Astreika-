@@ -41,6 +41,7 @@ function Courses(props) {
 					<Button
 						buttonText='Add new course'
 						onButtonPress={changeShowCreateCourse}
+						type='button'
 					/>
 				</div>
 			</div>
