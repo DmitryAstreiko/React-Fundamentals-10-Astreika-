@@ -7,6 +7,7 @@ import { mockedAuthorsList, mockedCoursesList } from './constants';
 import { v4 as uuid } from 'uuid';
 import Registration from './components/Registration/Registration';
 import { Login } from './components/Login/Login';
+import { CourseInfo } from './components/CourseInfo/CourseInfo';
 
 function App() {
 	const [isShowCreateCourse, setIsShowCreateCourse] = useState(false);
@@ -80,6 +81,7 @@ function App() {
 					onSearchCourses={onSearchCourses}
 				/>
 			)}
+			<CourseInfo />
 			<Registration />
 			<Login />
 		</div>

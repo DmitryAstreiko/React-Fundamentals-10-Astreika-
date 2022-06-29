@@ -25,7 +25,7 @@ function Registration() {
 	}
 
 	return (
-		<div className='formMain'>
+		<div className='FormMain'>
 			<form onSubmit={onSubmit} style={{ width: '350px' }}>
 				<p style={{ textAlign: 'center', fontSize: '22px' }}>
 					<label>
