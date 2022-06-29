@@ -11,46 +11,23 @@ function App() {
 	const [authors, setAuthors] = useState(getAuthors());
 	const [coursesItem, setCoursesItem] = useState(getCources());
 	const [allCoursesItem, setAllCoursesItem] = useState(getCources());
-	return (
-		<div>
-			<Header />
-			{isShowCreateCourse ? (
-				<CreateCourse
-					itemAuthors={authors}
-					changeIsShowCreateCourse={changeIsShowCreateCourse}
-					addNewAuthors={addNewAuthors}
-					onCreateNewCourse={onCreateNewCourse}
-				/>
-			) : (
-				<Courses
-					items={coursesItem}
-					itemAuthors={authors}
-					changeIsShowCreateCourse={changeIsShowCreateCourse}
-					onSearchCourses={onSearchCourses}
-				/>
-			)}
-		</div>
-	);
 
 	function onCreateNewCourse(newCourse) {
-		var tempArray = [];
-		tempArray.push(...coursesItem);
-		tempArray.push(newCourse[0]);
+		const tempArray = [...coursesItem, newCourse[0]];
+
 		setCoursesItem(tempArray);
 		setAllCoursesItem(tempArray);
 		setIsShowCreateCourse(!isShowCreateCourse);
 	}
 
 	function addNewAuthors(text) {
-		var tempAuthors = [];
-		tempAuthors.push(...authors);
-		tempAuthors.push({ id: uuid(), name: text });
+		const tempAuthors = [...authors, { id: uuid(), name: text }];
+
 		setAuthors(tempAuthors);
 	}
 
 	function onSearchCourses(text) {
 		var resArray = [];
-		//var mockedCourses = coursesItem;
 
 		if (text === '') {
 			setCoursesItem(allCoursesItem);
@@ -82,6 +59,27 @@ function App() {
 	function getCources() {
 		return mockedCoursesList;
 	}
+
+	return (
+		<div>
+			<Header />
+			{isShowCreateCourse ? (
+				<CreateCourse
+					itemAuthors={authors}
+					changeIsShowCreateCourse={changeIsShowCreateCourse}
+					addNewAuthors={addNewAuthors}
+					onCreateNewCourse={onCreateNewCourse}
+				/>
+			) : (
+				<Courses
+					items={coursesItem}
+					itemAuthors={authors}
+					changeIsShowCreateCourse={changeIsShowCreateCourse}
+					onSearchCourses={onSearchCourses}
+				/>
+			)}
+		</div>
+	);
 }
 
 export default App;

@@ -8,30 +8,6 @@ import FormatCreationDate from '../../helpers/formatCreationDate';
 
 function Courses(props) {
 	const [itemAuthors] = useState(props.itemAuthors);
-	return (
-		<div className='CoursesMain'>
-			<div className='CoursesSearchAddCourse'>
-				<SearchBar onSearchCourse={onSearchCourse} />
-				<div>
-					<Button
-						buttonText='Add new course'
-						onButtonPress={changeShowCreateCourse}
-					/>
-				</div>
-			</div>
-			{props.items.map((item, index) => (
-				<CourseCard
-					key={index}
-					id={item.id}
-					title={item.title}
-					description={item.description}
-					authors={getAuthorsByIds(item.authors)}
-					duration={GetCourseDuration(item.duration)}
-					created={FormatCreationDate(item.creationDate)}
-				/>
-			))}
-		</div>
-	);
 
 	function changeShowCreateCourse() {
 		props.changeIsShowCreateCourse();
@@ -56,6 +32,31 @@ function Courses(props) {
 		}
 		return resAuthors;
 	}
+
+	return (
+		<div className='CoursesMain'>
+			<div className='CoursesSearchAddCourse'>
+				<SearchBar onSearchCourse={onSearchCourse} />
+				<div>
+					<Button
+						buttonText='Add new course'
+						onButtonPress={changeShowCreateCourse}
+					/>
+				</div>
+			</div>
+			{props.items.map((item, index) => (
+				<CourseCard
+					key={index}
+					id={item.id}
+					title={item.title}
+					description={item.description}
+					authors={getAuthorsByIds(item.authors)}
+					duration={GetCourseDuration(item.duration)}
+					created={FormatCreationDate(item.creationDate)}
+				/>
+			))}
+		</div>
+	);
 }
 
 export default Courses;

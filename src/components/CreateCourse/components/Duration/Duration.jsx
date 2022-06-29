@@ -5,19 +5,6 @@ import GetCourseDuration from '../../../../helpers/getCourseDuration';
 
 function Duration(props) {
 	const [duration, setDuration] = useState('00:00 hour');
-	return (
-		<div className='DurationMain'>
-			<label className='CreateCourseLabelsParagraph'>
-				<b>Duration</b>
-			</label>
-			<label className='CreateCourseLabels'>Duration</label>
-			<Input
-				placeholderText='Enter duration minutes...'
-				onChange={onInputText}
-			/>
-			<label className='CreateCourseDuration'>Duration: {duration}</label>
-		</div>
-	);
 
 	function onInputText(text) {
 		//const isInteger = /^[0-9]+$/;
@@ -32,6 +19,20 @@ function Duration(props) {
 			props.onDuration(text);
 		}
 	}
+
+	return (
+		<div className='DurationMain'>
+			<label className='CreateCourseLabelsParagraph'>
+				<b>Duration</b>
+			</label>
+			<label className='CreateCourseLabels'>Duration</label>
+			<Input
+				placeholderText='Enter duration minutes...'
+				onChange={onInputText}
+			/>
+			<label className='CreateCourseDuration'>Duration: {duration}</label>
+		</div>
+	);
 }
 
 export default Duration;

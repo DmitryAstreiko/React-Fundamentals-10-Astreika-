@@ -1,7 +1,6 @@
 import React from 'react';
+import logo from '../Logo/Logo.svg';
 
-const Logo = () => (
-	<img src='Logo.svg' alt='Programming courses' width='70' height='70'></img>
+export const Logo = () => (
+	<img src={logo} alt='Courses' width='50' height='50'></img>
 );
-
-export default Logo;

@@ -3,6 +3,10 @@ import '../../../../App.css';
 import Button from '../../../../common/Button/Button';
 
 function AuthorItem(props) {
+	function onPress(id) {
+		props.onButtonPress(id);
+	}
+
 	return (
 		<div className='AuthorItemMain'>
 			<label>{props.AuthorName}</label>
@@ -13,10 +17,6 @@ function AuthorItem(props) {
 			/>
 		</div>
 	);
-
-	function onPress(id) {
-		props.onButtonPress(id);
-	}
 }
 
 export default AuthorItem;

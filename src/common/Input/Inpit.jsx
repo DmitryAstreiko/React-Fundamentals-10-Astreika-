@@ -3,6 +3,12 @@ import '../../App.css';
 
 function Input(props) {
 	const [inputValue, setInputValue] = useState('');
+
+	function onHandleClick(symbols) {
+		setInputValue(symbols);
+		props.onChange(symbols);
+	}
+
 	return (
 		<div className='InputMain'>
 			<input
@@ -16,11 +22,6 @@ function Input(props) {
 			<label for='searchIput'>{props.labelText}</label>
 		</div>
 	);
-
-	function onHandleClick(symbols) {
-		setInputValue(symbols);
-		props.onChange(symbols);
-	}
 }
 
 export default Input;

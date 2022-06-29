@@ -11,34 +11,6 @@ function CreateCourse(props) {
 	const [descCourse, setDescCourse] = useState(null);
 	const [durCourse, setDurCourse] = useState(null);
 	const [authorsCourse, setAuthorsCourse] = useState(null);
-	return (
-		<div className='CreateCourseMain'>
-			<label className='CreateCourseLabels'>Title</label>
-			<div className='CreateCourseTitle'>
-				<Input placeholderText='Enter title...' onChange={onInputText} />
-				<div className='CreateCourseButtons'>
-					<Button
-						buttonText='Cancel adding'
-						onButtonPress={changeShowCreateCourse}
-					/>
-					<Button buttonText='Create course' onButtonPress={onCreateCourse} />
-				</div>
-			</div>
-			<label className='CreateCourseLabels'>Description</label>
-			<textarea
-				minLength='2'
-				className='CreateCourseTextArea'
-				placeholder='Enter description'
-				onChange={(event) => setDescCourse(event.target.value)}
-			></textarea>
-			<Authors
-				itemsAuthors={props.itemAuthors}
-				AddAuthor={addAuthors}
-				onDurationChange={onDurationChange}
-				onAuthorsSelected={onAuthorsSelected}
-			/>
-		</div>
-	);
 
 	function onAuthorsSelected(text) {
 		setAuthorsCourse(text);
@@ -119,6 +91,35 @@ function CreateCourse(props) {
 	function changeShowCreateCourse() {
 		props.changeIsShowCreateCourse();
 	}
+
+	return (
+		<div className='CreateCourseMain'>
+			<label className='CreateCourseLabels'>Title</label>
+			<div className='CreateCourseTitle'>
+				<Input placeholderText='Enter title...' onChange={onInputText} />
+				<div className='CreateCourseButtons'>
+					<Button
+						buttonText='Cancel adding'
+						onButtonPress={changeShowCreateCourse}
+					/>
+					<Button buttonText='Create course' onButtonPress={onCreateCourse} />
+				</div>
+			</div>
+			<label className='CreateCourseLabels'>Description</label>
+			<textarea
+				minLength='2'
+				className='CreateCourseTextArea'
+				placeholder='Enter description'
+				onChange={(event) => setDescCourse(event.target.value)}
+			></textarea>
+			<Authors
+				itemsAuthors={props.itemAuthors}
+				AddAuthor={addAuthors}
+				onDurationChange={onDurationChange}
+				onAuthorsSelected={onAuthorsSelected}
+			/>
+		</div>
+	);
 }
 
 export default CreateCourse;

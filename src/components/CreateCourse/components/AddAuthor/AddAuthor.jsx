@@ -5,6 +5,16 @@ import Input from '../../../../common/Input/Inpit';
 
 function AddAuthor(props) {
 	const [nameAuthor, setnameAuthor] = useState(null);
+
+	function addAuthor() {
+		if (nameAuthor !== '') {
+			props.onAddAuthors(nameAuthor);
+		}
+	}
+
+	function onInputText(name) {
+		setnameAuthor(name);
+	}
 	return (
 		<div className='AddAuthorMain'>
 			<label className='CreateCourseLabelsParagraph'>
@@ -17,16 +27,6 @@ function AddAuthor(props) {
 			</div>
 		</div>
 	);
-
-	function addAuthor() {
-		if (nameAuthor !== '') {
-			props.onAddAuthors(nameAuthor);
-		}
-	}
-
-	function onInputText(name) {
-		setnameAuthor(name);
-	}
 }
 
 export default AddAuthor;
