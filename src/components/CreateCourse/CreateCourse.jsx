@@ -29,14 +29,14 @@ function CreateCourse(props) {
 	}
 
 	function prepareCourse() {
-		var authorsId = [];
+		let authorsId = [];
 		if (authorsCourse) {
 			authorsCourse?.forEach((element) => {
 				authorsId.push(element.id);
 			});
 		}
 
-		var course = [];
+		let course = [];
 
 		course.push({
 			id: uuid(),

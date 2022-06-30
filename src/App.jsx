@@ -31,15 +31,15 @@ function App() {
 	}
 
 	function onSearchCourses(text) {
-		var resArray = [];
+		let resArray = [];
 
 		if (text === '') {
 			setCoursesItem(allCoursesItem);
 		} else {
 			if (coursesItem) {
 				coursesItem?.forEach((element) => {
-					var foundTitle = element.title.toLowerCase().indexOf(text, 0);
-					var foundId = element.id.toLowerCase().indexOf(text, 0);
+					const foundTitle = element.title.toLowerCase().indexOf(text, 0);
+					const foundId = element.id.toLowerCase().indexOf(text, 0);
 					if (foundTitle > -1 || foundId > -1) {
 						resArray.push(element);
 					}

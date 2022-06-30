@@ -1,7 +1,7 @@
 function FormatCreationDate(dateString) {
-	var inputDate = Date.parse(dateString);
+	const inputDate = Date.parse(dateString);
 
-	var newDate = new Date(inputDate);
+	const newDate = new Date(inputDate);
 
 	return (
 		('0' + newDate.getDate()).slice(-2) +

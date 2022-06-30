@@ -18,7 +18,7 @@ function Courses(props) {
 	}
 
 	function getAuthorsByIds(arrayAuthors) {
-		var resAuthors = null;
+		let resAuthors = null;
 		for (let authorId of arrayAuthors) {
 			for (let authorItem of itemAuthors) {
 				if (authorItem.id === authorId) {
