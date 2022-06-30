@@ -1,4 +1,4 @@
-function GetCourseDuration(string) {
+function getCourseDuration(string) {
 	const inputNum = parseInt(string);
 
 	const hours = Math.floor(inputNum / 60);
@@ -14,4 +14,4 @@ function GetCourseDuration(string) {
 	return `${aboutHour}:${aboutMinutes}${aboutEndHour}`;
 }
 
-export default GetCourseDuration;
+export default getCourseDuration;

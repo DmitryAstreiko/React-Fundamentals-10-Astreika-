@@ -1,4 +1,4 @@
-function FormatCreationDate(dateString) {
+function formatCreationDate(dateString) {
 	const inputDate = Date.parse(dateString);
 
 	const newDate = new Date(inputDate);
@@ -12,4 +12,4 @@ function FormatCreationDate(dateString) {
 	);
 }
 
-export default FormatCreationDate;
+export default formatCreationDate;

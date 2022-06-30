@@ -3,8 +3,8 @@ import '../../App.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import CourseCard from './components/CourseCard/CourseCard';
 import Button from '../../common/Button/Button';
-import GetCourseDuration from '../../helpers/getCourseDuration';
-import FormatCreationDate from '../../helpers/formatCreationDate';
+import getCourseDuration from '../../helpers/getCourseDuration';
+import formatCreationDate from '../../helpers/formatCreationDate';
 import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 
@@ -58,8 +58,8 @@ function Courses(props) {
 						title={item.title}
 						description={item.description}
 						authors={getAuthorsByIds(item.authors)}
-						duration={GetCourseDuration(item.duration)}
-						created={FormatCreationDate(item.creationDate)}
+						duration={getCourseDuration(item.duration)}
+						created={formatCreationDate(item.creationDate)}
 					/>
 				))}
 			</div>

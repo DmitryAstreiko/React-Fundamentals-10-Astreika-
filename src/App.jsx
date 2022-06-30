@@ -1,6 +1,5 @@
 import './App.css';
 import React, { useState } from 'react';
-import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
 import CreateCourse from './components/CreateCourse/CreateCourse';
 import { mockedAuthorsList, mockedCoursesList } from './constants';
@@ -9,6 +8,7 @@ import Registration from './components/Registration/Registration';
 import { Login } from './components/Login/Login';
 import { CourseInfo } from './components/CourseInfo/CourseInfo';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 function App() {
 	const [isShowCreateCourse, setIsShowCreateCourse] = useState(false);
@@ -64,6 +64,33 @@ function App() {
 	function getCources() {
 		return mockedCoursesList;
 	}
+
+	function getCurrentAuthors(courseAuthors) {
+		let resAuthors = [];
+		courseAuthors.forEach((element) => {
+			let resFilter = authors.filter((x) => x.id === element);
+			if (resFilter) {
+				resAuthors.push(...resFilter);
+			}
+		});
+
+		return resAuthors;
+	}
+
+	function getCurrentCourse(courseId) {
+		return allCoursesItem.filter((x) => x.id === courseId);
+	}
+
+	function GoToCourse() {
+		const params = useParams();
+
+		//const courseItem = allCoursesItem.filter((x) => x.id === params.courseId);
+		const courseItem = getCurrentCourse(params.courseId);
+
+		const courseAuthors = getCurrentAuthors(courseItem[0].authors);
+
+		return <CourseInfo courseItem={courseItem} courseAuthors={courseAuthors} />;
+	}
 	/*{isShowCreateCourse ? (
 				<CreateCourse
 					itemAuthors={authors}
@@ -80,7 +107,6 @@ function App() {
 				/>
 			)}
 			<div>
-			<Header isRegistration={isRegistration} />
 			{isRegistration && <Registration />}
 		</div>*/
 	return (
@@ -89,7 +115,7 @@ function App() {
 				<Route path='/' element={<Registration />} />
 				<Route path='registration' element={<Registration />} />
 				<Route path='login' element={<Login />} />
-				<Route path='courses/:courseId' element={<CourseInfo />} />
+				<Route path='courses/:courseId' element={<GoToCourse />} />
 				<Route
 					path='courses/add'
 					element={
