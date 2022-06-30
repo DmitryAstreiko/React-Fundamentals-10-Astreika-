@@ -5,12 +5,16 @@ import CourseCard from './components/CourseCard/CourseCard';
 import Button from '../../common/Button/Button';
 import GetCourseDuration from '../../helpers/getCourseDuration';
 import FormatCreationDate from '../../helpers/formatCreationDate';
+import Header from '../Header/Header';
+import { useNavigate } from 'react-router-dom';
 
 function Courses(props) {
 	const [itemAuthors] = useState(props.itemAuthors);
+	let navigate = useNavigate();
 
 	function changeShowCreateCourse() {
 		props.changeIsShowCreateCourse();
+		navigate(`/courses/add`);
 	}
 
 	function onSearchCourse(text) {
@@ -34,28 +38,31 @@ function Courses(props) {
 	}
 
 	return (
-		<div className='CoursesMain'>
-			<div className='CoursesSearchAddCourse'>
-				<SearchBar onSearchCourse={onSearchCourse} />
-				<div>
-					<Button
-						buttonText='Add new course'
-						onButtonPress={changeShowCreateCourse}
-						type='button'
-					/>
+		<div>
+			<Header />
+			<div className='CoursesMain'>
+				<div className='CoursesSearchAddCourse'>
+					<SearchBar onSearchCourse={onSearchCourse} />
+					<div>
+						<Button
+							buttonText='Add new course'
+							onButtonPress={changeShowCreateCourse}
+							type='button'
+						/>
+					</div>
 				</div>
+				{props.items.map((item, index) => (
+					<CourseCard
+						key={index}
+						id={item.id}
+						title={item.title}
+						description={item.description}
+						authors={getAuthorsByIds(item.authors)}
+						duration={GetCourseDuration(item.duration)}
+						created={FormatCreationDate(item.creationDate)}
+					/>
+				))}
 			</div>
-			{props.items.map((item, index) => (
-				<CourseCard
-					key={index}
-					id={item.id}
-					title={item.title}
-					description={item.description}
-					authors={getAuthorsByIds(item.authors)}
-					duration={GetCourseDuration(item.duration)}
-					created={FormatCreationDate(item.creationDate)}
-				/>
-			))}
 		</div>
 	);
 }

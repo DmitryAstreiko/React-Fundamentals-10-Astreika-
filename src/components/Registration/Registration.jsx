@@ -3,14 +3,15 @@ import '../../App.css';
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Inpit';
 import { Link } from 'react-router-dom';
+import Header from '../Header/Header';
 
 function Registration() {
-	const [nameUser, setNameUser] = useState(null);
+	const [loginUser, setLoginUser] = useState(null);
 	const [passUser, setPassUser] = useState(null);
 	const [emailUser, setEmailUser] = useState(null);
 
 	function onChangeLogin(text) {
-		setNameUser(text);
+		setLoginUser(text);
 	}
 
 	function onChangePassword(text) {
@@ -21,51 +22,72 @@ function Registration() {
 		setEmailUser(text);
 	}
 
+	function chekingFields() {
+		console.log(loginUser);
+		if (loginUser === null) {
+			alert('Please, fill the field "Name"');
+			return false;
+		}
+
+		return true;
+	}
+
 	function onSubmit(event) {
-		alert(event.text);
+		if (!chekingFields) {
+			const newUser = {
+				loginUser,
+				passUser,
+				emailUser,
+			};
+
+			//alert(event.text);
+		}
 	}
 
 	return (
-		<div className='FormMain'>
-			<form onSubmit={onSubmit} style={{ width: '350px' }}>
-				<p style={{ textAlign: 'center', fontSize: '22px' }}>
-					<label>
-						<b>Registration</b>
-					</label>
-				</p>
-				<Input
-					type='text'
-					name='Name'
-					placeholderText='Enter name'
-					onChange={onChangeLogin}
-				/>
+		<div>
+			<Header isRegistration={true} />
+			<div className='FormMain'>
+				<form onSubmit={onSubmit} style={{ width: '350px' }}>
+					<p style={{ textAlign: 'center', fontSize: '22px' }}>
+						<label>
+							<b>Registration</b>
+						</label>
+					</p>
+					<Input
+						type='text'
+						name='Name'
+						placeholderText='Enter name'
+						onChange={onChangeLogin}
+					/>
 
-				<Input
-					type='email'
-					name='Email'
-					placeholderText='Enter email'
-					onChange={onChangeEmail}
-				/>
+					<Input
+						type='email'
+						name='Email'
+						placeholderText='Enter email'
+						onChange={onChangeEmail}
+					/>
 
-				<Input
-					type='password'
-					name='Password'
-					placeholderText='Enter password'
-					onChange={onChangePassword}
-				/>
+					<Input
+						type='password'
+						name='Password'
+						placeholderText='Enter password'
+						onChange={onChangePassword}
+					/>
 
-				<p style={{ textAlign: 'center' }}>
-					<Button buttonText='Registration' type='submit' />
-				</p>
-				<p style={{ textAlign: 'center' }}>
-					<label>
-						If you have an account you can{' '}
-						<b>
-							<Link to='/login'>Login</Link>
-						</b>
-					</label>
-				</p>
-			</form>
+					<p style={{ textAlign: 'center' }}>
+						<Button buttonText='Registration' type='submit' />
+					</p>
+					<p style={{ textAlign: 'center' }}>
+						<label>
+							If you have an account you can{' '}
+							<b>
+								<Link to='/login'>Login</Link>
+							</b>
+						</label>
+					</p>
+				</form>
+			</div>
 		</div>
 	);
 }

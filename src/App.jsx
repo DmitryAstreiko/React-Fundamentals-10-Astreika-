@@ -8,6 +8,7 @@ import { v4 as uuid } from 'uuid';
 import Registration from './components/Registration/Registration';
 import { Login } from './components/Login/Login';
 import { CourseInfo } from './components/CourseInfo/CourseInfo';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
 	const [isShowCreateCourse, setIsShowCreateCourse] = useState(false);
@@ -77,12 +78,42 @@ function App() {
 					changeIsShowCreateCourse={changeIsShowCreateCourse}
 					onSearchCourses={onSearchCourses}
 				/>
-			)}*/
-	return (
-		<div>
+			)}
+			<div>
 			<Header isRegistration={isRegistration} />
 			{isRegistration && <Registration />}
-		</div>
+		</div>*/
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path='/' element={<Registration />} />
+				<Route path='registration' element={<Registration />} />
+				<Route path='login' element={<Login />} />
+				<Route path='courses/:courseId' element={<CourseInfo />} />
+				<Route
+					path='courses/add'
+					element={
+						<CreateCourse
+							itemAuthors={authors}
+							changeIsShowCreateCourse={changeIsShowCreateCourse}
+							addNewAuthors={addNewAuthors}
+							onCreateNewCourse={onCreateNewCourse}
+						/>
+					}
+				/>
+				<Route
+					path='courses'
+					element={
+						<Courses
+							items={coursesItem}
+							itemAuthors={authors}
+							changeIsShowCreateCourse={changeIsShowCreateCourse}
+							onSearchCourses={onSearchCourses}
+						/>
+					}
+				/>
+			</Routes>
+		</BrowserRouter>
 	);
 }
 
