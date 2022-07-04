@@ -5,7 +5,7 @@ import Input from '../../common/Input/Inpit';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 
-export function Login() {
+export function Login(props) {
 	const [emailUser, setEmailUser] = useState(null);
 	const [passUser, setPassUser] = useState(null);
 	let navigate = useNavigate();
@@ -23,8 +23,31 @@ export function Login() {
 		setPassUser(text);
 	}
 
-	function onSubmit(event) {
-		alert(event.text);
+	async function onSubmit(event) {
+		event.preventDefault();
+
+		const newUser = {
+			password: passUser,
+			email: emailUser,
+		};
+
+		const response = await fetch('http://localhost:4000/login', {
+			method: 'POST',
+			body: JSON.stringify(newUser),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		const result = await response.json();
+
+		if (result.successful === true) {
+			localStorage.setItem('courseUserToken', result.result);
+			navigate(`/courses`);
+			props.userName(result.user.name);
+		} else {
+			alert('The username or password is incorrect');
+		}
 	}
 
 	return (

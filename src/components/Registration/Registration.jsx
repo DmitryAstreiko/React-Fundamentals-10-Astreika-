@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import '../../App.css';
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Inpit';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 
 function Registration() {
 	const [loginUser, setLoginUser] = useState(null);
 	const [passUser, setPassUser] = useState(null);
 	const [emailUser, setEmailUser] = useState(null);
+	let navigate = useNavigate();
 
 	function onChangeLogin(text) {
 		setLoginUser(text);
@@ -32,16 +33,30 @@ function Registration() {
 		return true;
 	}
 
-	function onSubmit(event) {
-		if (!chekingFields) {
-			const newUser = {
-				loginUser,
-				passUser,
-				emailUser,
-			};
+	async function onSubmit(event) {
+		//if (chekingFields) {
+		event.preventDefault();
 
-			//alert(event.text);
+		const newUser = {
+			name: loginUser,
+			password: passUser,
+			email: emailUser,
+		};
+
+		const response = await fetch('http://localhost:4000/register', {
+			method: 'POST',
+			body: JSON.stringify(newUser),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		const result = await response.json();
+
+		if (result.successful === true) {
+			navigate(`/login`);
 		}
+		//}
 	}
 
 	return (

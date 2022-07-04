@@ -6,7 +6,7 @@ import { mockedAuthorsList, mockedCoursesList } from './constants';
 import { v4 as uuid } from 'uuid';
 import Registration from './components/Registration/Registration';
 import { Login } from './components/Login/Login';
-import { CourseInfo } from './components/CourseInfo/CourseInfo';
+import CourseInfo from './components/CourseInfo/CourseInfo';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useParams } from 'react-router';
 
@@ -15,7 +15,7 @@ function App() {
 	const [authors, setAuthors] = useState(getAuthors());
 	const [coursesItem, setCoursesItem] = useState(getCources());
 	const [allCoursesItem, setAllCoursesItem] = useState(getCources());
-	const [isRegistration, setIsRegistration] = useState(true);
+	const [userName, setUserName] = useState('Test User');
 
 	function onCreateNewCourse(newCourse) {
 		const tempArray = [...coursesItem, newCourse[0]];
@@ -23,6 +23,10 @@ function App() {
 		setCoursesItem(tempArray);
 		setAllCoursesItem(tempArray);
 		setIsShowCreateCourse(!isShowCreateCourse);
+	}
+
+	function getUserName(text) {
+		setUserName(text);
 	}
 
 	function addNewAuthors(text) {
@@ -84,37 +88,25 @@ function App() {
 	function GoToCourse() {
 		const params = useParams();
 
-		//const courseItem = allCoursesItem.filter((x) => x.id === params.courseId);
 		const courseItem = getCurrentCourse(params.courseId);
 
 		const courseAuthors = getCurrentAuthors(courseItem[0].authors);
 
-		return <CourseInfo courseItem={courseItem} courseAuthors={courseAuthors} />;
+		return (
+			<CourseInfo
+				courseItem={courseItem}
+				courseAuthors={courseAuthors}
+				userName={userName}
+			/>
+		);
 	}
-	/*{isShowCreateCourse ? (
-				<CreateCourse
-					itemAuthors={authors}
-					changeIsShowCreateCourse={changeIsShowCreateCourse}
-					addNewAuthors={addNewAuthors}
-					onCreateNewCourse={onCreateNewCourse}
-				/>
-			) : (
-				<Courses
-					items={coursesItem}
-					itemAuthors={authors}
-					changeIsShowCreateCourse={changeIsShowCreateCourse}
-					onSearchCourses={onSearchCourses}
-				/>
-			)}
-			<div>
-			{isRegistration && <Registration />}
-		</div>*/
+
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path='/' element={<Registration />} />
+				<Route path='/' element={<Login />} />
 				<Route path='registration' element={<Registration />} />
-				<Route path='login' element={<Login />} />
+				<Route path='login' element={<Login userName={getUserName} />} />
 				<Route path='courses/:courseId' element={<GoToCourse />} />
 				<Route
 					path='courses/add'
@@ -124,6 +116,7 @@ function App() {
 							changeIsShowCreateCourse={changeIsShowCreateCourse}
 							addNewAuthors={addNewAuthors}
 							onCreateNewCourse={onCreateNewCourse}
+							userName={userName}
 						/>
 					}
 				/>
@@ -131,10 +124,11 @@ function App() {
 					path='courses'
 					element={
 						<Courses
-							items={coursesItem}
+							courseItems={coursesItem}
 							itemAuthors={authors}
 							changeIsShowCreateCourse={changeIsShowCreateCourse}
 							onSearchCourses={onSearchCourses}
+							userName={userName}
 						/>
 					}
 				/>

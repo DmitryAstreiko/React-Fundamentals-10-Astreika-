@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import getCourseDuration from '../../helpers/getCourseDuration';
 import Header from '../Header/Header';
 import formatCreationDate from '../../helpers/formatCreationDate';
+import PropTypes from 'prop-types';
 
-export function CourseInfo(props) {
+function CourseInfo(props) {
 	let navigate = useNavigate();
 
 	function showCourses() {
@@ -14,7 +15,7 @@ export function CourseInfo(props) {
 
 	return (
 		<div>
-			<Header />
+			<Header userName={props.userName} />
 			<div className='CourseInfoMain'>
 				<Button
 					type='button'
@@ -51,3 +52,10 @@ export function CourseInfo(props) {
 		</div>
 	);
 }
+
+CourseInfo.propTypes = {
+	courseItem: PropTypes.array,
+	userName: PropTypes.string,
+};
+
+export default CourseInfo;

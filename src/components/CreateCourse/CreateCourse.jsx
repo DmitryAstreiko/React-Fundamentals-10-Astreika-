@@ -25,7 +25,7 @@ function CreateCourse(props) {
 		setTitleCourse(text);
 	}
 
-	function onCreateCourse(id) {
+	function onCreateCourse() {
 		if (checkFields()) {
 			props.onCreateNewCourse(prepareCourse());
 			navigate(`/courses`);
@@ -99,7 +99,7 @@ function CreateCourse(props) {
 
 	return (
 		<div>
-			<Header />
+			<Header userName={props.userName} />
 			<div className='CreateCourseMain'>
 				<label className='CreateCourseLabels'>Title</label>
 				<div className='CreateCourseTitle'>

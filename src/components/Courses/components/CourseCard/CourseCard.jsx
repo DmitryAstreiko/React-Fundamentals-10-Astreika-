@@ -2,6 +2,7 @@ import React from 'react';
 import '../../../../App.css';
 import Button from '../../../../common/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 function CourseCard(props) {
 	let navigate = useNavigate();
@@ -43,5 +44,13 @@ function CourseCard(props) {
 		</div>
 	);
 }
+
+CourseCard.propTypes = {
+	description: PropTypes.string,
+	title: PropTypes.string,
+	authors: PropTypes.string,
+	duration: PropTypes.string,
+	created: PropTypes.string,
+};
 
 export default CourseCard;
