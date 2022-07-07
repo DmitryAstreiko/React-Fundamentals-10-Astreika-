@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Courses from './components/Courses/Courses';
 import CreateCourse from './components/CreateCourse/CreateCourse';
 import { mockedAuthorsList, mockedCoursesList } from './constants';
@@ -7,11 +7,11 @@ import { v4 as uuid } from 'uuid';
 import Registration from './components/Registration/Registration';
 import { Login } from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
+import CoursesNew from './components/Courses/CoursesNew';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useParams } from 'react-router';
-import { connect } from 'react-redux';
 
-function App({ courses }) {
+function App() {
 	const [isShowCreateCourse, setIsShowCreateCourse] = useState(false);
 	const [authors, setAuthors] = useState(getAuthors());
 	const [coursesItem, setCoursesItem] = useState(getCources());
@@ -102,12 +102,10 @@ function App({ courses }) {
 		);
 	}
 
-	console.log(courses);
-
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path='/' element={<Login />} />
+				<Route path='/' element={<CoursesNew />} />
 				<Route path='registration' element={<Registration />} />
 				<Route path='login' element={<Login userName={getUserName} />} />
 				<Route path='courses/:courseId' element={<GoToCourse />} />
@@ -140,4 +138,4 @@ function App({ courses }) {
 	);
 }
 
-export default connect(({ courses }) => ({ courses }))(App);
+export default App;
