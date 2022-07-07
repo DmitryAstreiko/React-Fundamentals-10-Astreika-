@@ -9,8 +9,9 @@ import { Login } from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useParams } from 'react-router';
+import { connect } from 'react-redux';
 
-function App() {
+function App({ courses }) {
 	const [isShowCreateCourse, setIsShowCreateCourse] = useState(false);
 	const [authors, setAuthors] = useState(getAuthors());
 	const [coursesItem, setCoursesItem] = useState(getCources());
@@ -101,6 +102,8 @@ function App() {
 		);
 	}
 
+	console.log(courses);
+
 	return (
 		<BrowserRouter>
 			<Routes>
@@ -137,4 +140,4 @@ function App() {
 	);
 }
 
-export default App;
+export default connect(({ courses }) => ({ courses }))(App);
