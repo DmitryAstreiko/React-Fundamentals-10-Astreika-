@@ -10,6 +10,8 @@ import CourseInfo from './components/CourseInfo/CourseInfo';
 import CoursesNew from './components/Courses/CoursesNew';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCourses, getAuthors as getAuthorsService } from './service';
 
 function App() {
 	const [isShowCreateCourse, setIsShowCreateCourse] = useState(false);
@@ -17,6 +19,14 @@ function App() {
 	const [coursesItem, setCoursesItem] = useState(getCources());
 	const [allCoursesItem, setAllCoursesItem] = useState(getCources());
 	const [userName, setUserName] = useState('Test User');
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getCourses());
+		//getCourses();
+		dispatch(getAuthorsService());
+	}, []);
 
 	function onCreateNewCourse(newCourse) {
 		const tempArray = [...coursesItem, newCourse[0]];

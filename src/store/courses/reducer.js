@@ -1,14 +1,12 @@
-import GET_COURSES from './types';
+import { GET_COURSES } from './types';
+//import { getCourses } from '../../service';
 
-export const coursesDefaultState = [{ title: 'asdasd', description: 'asdasd' }];
-//courses: [],
+const coursesInitialState = [];
 
-//};
-
-export const coursesReducer = (state = coursesDefaultState, action) => {
+export const coursesReducer = (state = coursesInitialState, action) => {
 	switch (action.type) {
 		case GET_COURSES:
-			return [...state, { title: '123', description: '7653' }];
+			return [...state, action.payload];
 		default:
 			return state;
 	}

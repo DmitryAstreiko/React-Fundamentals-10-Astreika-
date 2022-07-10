@@ -1,4 +1,5 @@
 export const GET_COURSES = 'courses/GET_COURSES';
+
 //const moduleName = 'courses';
 
 /*const defaultState = {

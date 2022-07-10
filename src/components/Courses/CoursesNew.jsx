@@ -9,18 +9,21 @@ import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCourses as getCoursesAction } from '../../store/courses/actions';
 
+import { useDispatch, useSelector } from 'react-redux';
 //https://www.youtube.com/watch?v=dgM9OGVfKCQ
 
-function CoursesNew({ courses, getCourses }) {
+function CoursesNew() {
 	//const [itemAuthors] = useState(props.itemAuthors);
+
 	const [itemAuthors] = useState();
 	let navigate = useNavigate();
+	const courses = useSelector((state) => state.courses);
+	const authors = useSelector((state) => state.authors);
 
 	function changeShowCreateCourse() {
 		//props.changeIsShowCreateCourse();
-		//navigate(`/courses/add`);
+		navigate(`/courses/add`);
 	}
 
 	function onSearchCourse(text) {
@@ -43,15 +46,16 @@ function CoursesNew({ courses, getCourses }) {
 		return resAuthors;
 	}
 
-	useEffect(() => {
+	/*useEffect(() => {
 		getCourses();
 		/*const currentToken = localStorage.getItem('courseUserToken');
 		if (currentToken === null) {
 			navigate(`/login`);
-		}*/
-	});
+		}
+	});*/
 
-	console.log(courses);
+	console.log('courses' + courses);
+	console.log('authors' + authors);
 
 	return (
 		<div>
@@ -73,7 +77,6 @@ function CoursesNew({ courses, getCourses }) {
 						id={item.id}
 						title={item.title}
 						description={item.description}
-						authors={getAuthorsByIds(item.authors)}
 						duration={getCourseDuration(item.duration)}
 						created={formatCreationDate(item.creationDate)}
 					/>
@@ -98,6 +101,8 @@ CoursesNew.propTypes = {
 	}),*/
 };
 
-export default connect(({ courses }) => ({ courses: courses }), {
+/*export default connect(({ courses }) => ({ courses: courses }), {
 	getCourses: getCoursesAction,
-})(CoursesNew);
+})(CoursesNew);*/
+
+export default CoursesNew;
