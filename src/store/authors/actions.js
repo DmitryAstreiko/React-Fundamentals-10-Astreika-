@@ -1,3 +1,3 @@
-import { GET_AUTORS } from './types.js';
+import { GET_AUTHORS } from './types.js';
 
-const getAuthorsAction = (payload) => ({ type: GET_AUTORS, payload });
+export const getAuthorsAction = (payload) => ({ type: GET_AUTHORS, payload });

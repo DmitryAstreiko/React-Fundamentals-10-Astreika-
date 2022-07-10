@@ -33,6 +33,6 @@ export const getAuthors = () => (dispatch) => {
 	try {
 		fetch('http://localhost:4000/authors/all')
 			.then((Response) => Response.json())
-			.then((data) => dispatch({ type: GET_AUTORS, payload: data }));
+			.then((data) => dispatch(getAuthorsAction(data.result)));
 	} catch (error) {}
 };
