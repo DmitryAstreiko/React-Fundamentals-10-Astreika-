@@ -8,35 +8,37 @@ import { Login } from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useParams } from 'react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loadCourses, loadAuthors } from './service';
 
 function App() {
 	const [isShowCreateCourse, setIsShowCreateCourse] = useState(false);
-	const [authors, setAuthors] = useState();
+	//const [authors, setAuthors] = useState();
 	const [coursesItem, setCoursesItem] = useState();
-	const [allCoursesItem, setAllCoursesItem] = useState();
-	const [userName, setUserName] = useState('Test User');
+	//const [allCoursesItem, setAllCoursesItem] = useState();
+
+	let allCoursesItem = useSelector((state) => state.courses);
+	let authors = useSelector((state) => state.authors);
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		loadCourses(dispatch);
-		//loadAuthors(dispatch);
+		loadAuthors(dispatch);
 	}, []);
 
 	function onCreateNewCourse(newCourse) {
 		const tempArray = [...coursesItem, newCourse[0]];
 
 		setCoursesItem(tempArray);
-		setAllCoursesItem(tempArray);
+		//setAllCoursesItem(tempArray);
 		setIsShowCreateCourse(!isShowCreateCourse);
 	}
 
 	function addNewAuthors(text) {
 		const tempAuthors = [...authors, { id: uuid(), name: text }];
 
-		setAuthors(tempAuthors);
+		//setAuthors(tempAuthors);
 	}
 
 	function onSearchCourses(text) {
@@ -85,16 +87,9 @@ function App() {
 		const params = useParams();
 
 		const courseItem = getCurrentCourse(params.courseId);
-
 		const courseAuthors = getCurrentAuthors(courseItem[0].authors);
 
-		return (
-			<CourseInfo
-				courseItem={courseItem}
-				courseAuthors={courseAuthors}
-				userName={userName}
-			/>
-		);
+		return <CourseInfo courseItem={courseItem} courseAuthors={courseAuthors} />;
 	}
 
 	return (
@@ -112,7 +107,6 @@ function App() {
 							changeIsShowCreateCourse={changeIsShowCreateCourse}
 							addNewAuthors={addNewAuthors}
 							onCreateNewCourse={onCreateNewCourse}
-							userName={userName}
 						/>
 					}
 				/>

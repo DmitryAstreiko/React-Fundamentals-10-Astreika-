@@ -1,5 +1,5 @@
 import { loadCoursesAction } from './store/courses/actions';
-import { getAuthorsAction } from './store/authors/actions';
+import { loadAuthorsAction } from './store/authors/actions';
 import { loginUserAction } from './store/user/actions';
 
 /*export const getCourses = () => async (dispatch) => {
@@ -30,7 +30,7 @@ export const loadAuthors = (dispatch) => {
 	try {
 		fetch('http://localhost:4000/authors/all')
 			.then((Response) => Response.json())
-			.then((data) => dispatch(getAuthorsAction(data.result)));
+			.then((data) => dispatch(loadAuthorsAction(data.result[0])));
 	} catch (error) {}
 };
 

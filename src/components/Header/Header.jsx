@@ -15,7 +15,7 @@ function Header() {
 	const dispatch = useDispatch();
 
 	function onLogout() {
-		//localStorage.removeItem('courseUserToken');
+		localStorage.removeItem('courseUserToken');
 		dispatch(logoutUserAction());
 		navigate(`/login`);
 	}

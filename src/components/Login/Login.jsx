@@ -45,7 +45,7 @@ export function Login() {
 		const result = await response.json();
 
 		if (result.successful === true) {
-			//localStorage.setItem('courseUserToken', result.result);
+			localStorage.setItem('courseUserToken', result.result);
 			dispatch(loginUserAction(result));
 			navigate(`/courses`);
 		} else {

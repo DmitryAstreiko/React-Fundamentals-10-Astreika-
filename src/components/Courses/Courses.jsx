@@ -17,7 +17,7 @@ function Courses(props) {
 	const courses = useSelector((state) => state.courses);
 	const itemAuthors = useSelector((state) => state.authors);
 
-	const isLogIn = useSelector((state) => state.isAuth);
+	const isLogIn = useSelector((state) => state.users.isAuth);
 
 	function changeShowCreateCourse() {
 		props.changeIsShowCreateCourse();
@@ -45,6 +45,8 @@ function Courses(props) {
 	}
 
 	useEffect(() => {
+		//const currentToken = localStorage.getItem('courseUserToken');
+		//if (currentToken === null) {
 		if (isLogIn === false) {
 			navigate(`/login`);
 		}
@@ -70,6 +72,7 @@ function Courses(props) {
 						id={item.id}
 						title={item.title}
 						description={item.description}
+						authors={getAuthorsByIds(item.authors)}
 						duration={getCourseDuration(item.duration)}
 						created={formatCreationDate(item.creationDate)}
 					/>
