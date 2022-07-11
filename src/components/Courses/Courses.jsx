@@ -8,24 +8,21 @@ import formatCreationDate from '../../helpers/formatCreationDate';
 import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-function Courses(props) {
-	//const [itemAuthors] = useState(props.itemAuthors);
+function Courses() {
+	const [courses, setCourses] = useState(useSelector((state) => state.courses));
+
 	let navigate = useNavigate();
 
-	const courses = useSelector((state) => state.courses);
+	let allCoursesItem = useSelector((state) => state.courses);
+
 	const itemAuthors = useSelector((state) => state.authors);
 
 	const isLogIn = useSelector((state) => state.users.isAuth);
 
 	function changeShowCreateCourse() {
-		//props.changeIsShowCreateCourse();
 		navigate(`/courses/add`);
-	}
-
-	function onSearchCourse(text) {
-		props.onSearchCourses(text);
 	}
 
 	function getAuthorsByIds(arrayAuthors) {
@@ -42,6 +39,28 @@ function Courses(props) {
 			}
 		}
 		return resAuthors;
+	}
+
+	function onSearchCourse(text) {
+		let resArray = [];
+
+		if (text === '') {
+			setCourses(allCoursesItem);
+		} else {
+			if (courses) {
+				courses?.forEach((element) => {
+					const foundTitle = element.title.toLowerCase().indexOf(text, 0);
+					const foundId = element.id.toLowerCase().indexOf(text, 0);
+					if (foundTitle > -1 || foundId > -1) {
+						resArray.push(element);
+					}
+				});
+			}
+
+			if (resArray.length > 0) {
+				setCourses(resArray);
+			}
+		}
 	}
 
 	useEffect(() => {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../../../../App.css';
 import Button from '../../../../common/Button/Button';
 import Input from '../../../../common/Input/Inpit';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addAuthorsAction } from '../../../../store/authors/actions';
 
 function AddAuthor() {
@@ -12,7 +12,6 @@ function AddAuthor() {
 
 	function addAuthor() {
 		if (nameAuthor !== '') {
-			//props.onAddAuthors(nameAuthor);
 			dispatch(addAuthorsAction(nameAuthor));
 		}
 	}

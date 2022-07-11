@@ -3,7 +3,7 @@ import '../../../../App.css';
 import Button from '../../../../common/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { deleteCoursesAction } from '../../../../store/courses/actions';
 
 function CourseCard(props) {
@@ -19,8 +19,8 @@ function CourseCard(props) {
 		navigate(`/courses`);
 	}
 
-	function deleteCourse(index) {
-		dispatch(deleteCoursesAction(index));
+	function deleteCourse(id) {
+		dispatch(deleteCoursesAction(id));
 	}
 
 	return (
@@ -59,7 +59,7 @@ function CourseCard(props) {
 						<Button
 							buttonText='Delete'
 							type='button'
-							onButtonPress={() => deleteCourse(props.index)}
+							onButtonPress={() => deleteCourse(props.id)}
 						/>
 					</div>
 				</div>

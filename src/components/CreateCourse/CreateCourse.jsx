@@ -8,9 +8,9 @@ import Moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import { addCoursesAction } from '../../store/courses/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-function CreateCourse(props) {
+function CreateCourse() {
 	const [titleCourse, setTitleCourse] = useState(null);
 	const [descCourse, setDescCourse] = useState(null);
 	const [durCourse, setDurCourse] = useState(null);
@@ -30,7 +30,6 @@ function CreateCourse(props) {
 
 	function onCreateCourse() {
 		if (checkFields()) {
-			//props.onCreateNewCourse(prepareCourse());
 			dispatch(addCoursesAction(prepareCourse()));
 			navigate(`/courses`);
 		}
@@ -92,12 +91,7 @@ function CreateCourse(props) {
 		return true;
 	}
 
-	function addAuthors(value) {
-		//props.addNewAuthors(value);
-	}
-
 	function onCancelAdding() {
-		//props.changeIsShowCreateCourse();
 		navigate(`/courses`);
 	}
 
@@ -133,8 +127,6 @@ function CreateCourse(props) {
 					onChange={(event) => setDescCourse(event.target.value)}
 				></textarea>
 				<Authors
-					itemsAuthors={props.itemAuthors}
-					AddAuthor={addAuthors}
 					onDurationChange={onDurationChange}
 					onAuthorsSelected={onAuthorsSelected}
 				/>

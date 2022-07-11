@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Courses from './components/Courses/Courses';
 import CreateCourse from './components/CreateCourse/CreateCourse';
 import Registration from './components/Registration/Registration';
@@ -11,8 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadCourses, loadAuthors } from './service';
 
 function App() {
-	const [coursesItem, setCoursesItem] = useState();
-
 	let allCoursesItem = useSelector((state) => state.courses);
 	let authors = useSelector((state) => state.authors);
 
@@ -22,28 +20,6 @@ function App() {
 		loadCourses(dispatch);
 		loadAuthors(dispatch);
 	}, []);
-
-	function onSearchCourses(text) {
-		let resArray = [];
-
-		if (text === '') {
-			setCoursesItem(allCoursesItem);
-		} else {
-			if (coursesItem) {
-				coursesItem?.forEach((element) => {
-					const foundTitle = element.title.toLowerCase().indexOf(text, 0);
-					const foundId = element.id.toLowerCase().indexOf(text, 0);
-					if (foundTitle > -1 || foundId > -1) {
-						resArray.push(element);
-					}
-				});
-			}
-
-			if (resArray.length > 0) {
-				setCoursesItem(resArray);
-			}
-		}
-	}
 
 	function getCurrentAuthors(courseAuthors) {
 		let resAuthors = [];
@@ -78,10 +54,7 @@ function App() {
 				<Route path='login' element={<Login />} />
 				<Route path='courses/:courseId' element={<GoToCourse />} />
 				<Route path='courses/add' element={<CreateCourse />} />
-				<Route
-					path='courses'
-					element={<Courses onSearchCourses={onSearchCourses} />}
-				/>
+				<Route path='courses' element={<Courses />} />
 			</Routes>
 		</BrowserRouter>
 	);

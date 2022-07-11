@@ -14,7 +14,7 @@ export const loadCourses = (dispatch) => {
 	try {
 		fetch('http://localhost:4000/courses/all')
 			.then((Response) => Response.json())
-			.then((data) => dispatch(loadCoursesAction(data.result[0])));
+			.then((data) => dispatch(loadCoursesAction(data.result)));
 	} catch (error) {}
 };
 
@@ -30,7 +30,7 @@ export const loadAuthors = (dispatch) => {
 	try {
 		fetch('http://localhost:4000/authors/all')
 			.then((Response) => Response.json())
-			.then((data) => dispatch(loadAuthorsAction(data.result[0])));
+			.then((data) => dispatch(loadAuthorsAction(data.result)));
 	} catch (error) {}
 };
 
