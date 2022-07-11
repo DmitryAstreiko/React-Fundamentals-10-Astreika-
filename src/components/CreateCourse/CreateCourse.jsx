@@ -7,6 +7,8 @@ import { v4 as uuid } from 'uuid';
 import Moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
+import { addCoursesAction } from '../../store/courses/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 function CreateCourse(props) {
 	const [titleCourse, setTitleCourse] = useState(null);
@@ -14,6 +16,7 @@ function CreateCourse(props) {
 	const [durCourse, setDurCourse] = useState(null);
 	const [authorsCourse, setAuthorsCourse] = useState(null);
 	let navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	function onAuthorsSelected(text) {
 		setAuthorsCourse(text);
@@ -27,7 +30,8 @@ function CreateCourse(props) {
 
 	function onCreateCourse() {
 		if (checkFields()) {
-			props.onCreateNewCourse(prepareCourse());
+			//props.onCreateNewCourse(prepareCourse());
+			dispatch(addCoursesAction(prepareCourse()));
 			navigate(`/courses`);
 		}
 	}
@@ -89,11 +93,11 @@ function CreateCourse(props) {
 	}
 
 	function addAuthors(value) {
-		props.addNewAuthors(value);
+		//props.addNewAuthors(value);
 	}
 
 	function onCancelAdding() {
-		props.changeIsShowCreateCourse();
+		//props.changeIsShowCreateCourse();
 		navigate(`/courses`);
 	}
 

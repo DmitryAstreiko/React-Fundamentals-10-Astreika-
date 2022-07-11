@@ -20,7 +20,7 @@ function Courses(props) {
 	const isLogIn = useSelector((state) => state.users.isAuth);
 
 	function changeShowCreateCourse() {
-		props.changeIsShowCreateCourse();
+		//props.changeIsShowCreateCourse();
 		navigate(`/courses/add`);
 	}
 
@@ -75,6 +75,7 @@ function Courses(props) {
 						authors={getAuthorsByIds(item.authors)}
 						duration={getCourseDuration(item.duration)}
 						created={formatCreationDate(item.creationDate)}
+						index={index}
 					/>
 				))}
 			</div>

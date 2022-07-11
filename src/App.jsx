@@ -2,7 +2,6 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import Courses from './components/Courses/Courses';
 import CreateCourse from './components/CreateCourse/CreateCourse';
-import { v4 as uuid } from 'uuid';
 import Registration from './components/Registration/Registration';
 import { Login } from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
@@ -12,10 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadCourses, loadAuthors } from './service';
 
 function App() {
-	const [isShowCreateCourse, setIsShowCreateCourse] = useState(false);
-	//const [authors, setAuthors] = useState();
 	const [coursesItem, setCoursesItem] = useState();
-	//const [allCoursesItem, setAllCoursesItem] = useState();
 
 	let allCoursesItem = useSelector((state) => state.courses);
 	let authors = useSelector((state) => state.authors);
@@ -26,20 +22,6 @@ function App() {
 		loadCourses(dispatch);
 		loadAuthors(dispatch);
 	}, []);
-
-	function onCreateNewCourse(newCourse) {
-		const tempArray = [...coursesItem, newCourse[0]];
-
-		setCoursesItem(tempArray);
-		//setAllCoursesItem(tempArray);
-		setIsShowCreateCourse(!isShowCreateCourse);
-	}
-
-	function addNewAuthors(text) {
-		const tempAuthors = [...authors, { id: uuid(), name: text }];
-
-		//setAuthors(tempAuthors);
-	}
 
 	function onSearchCourses(text) {
 		let resArray = [];
@@ -61,10 +43,6 @@ function App() {
 				setCoursesItem(resArray);
 			}
 		}
-	}
-
-	function changeIsShowCreateCourse() {
-		setIsShowCreateCourse(!isShowCreateCourse);
 	}
 
 	function getCurrentAuthors(courseAuthors) {
@@ -99,17 +77,7 @@ function App() {
 				<Route path='registration' element={<Registration />} />
 				<Route path='login' element={<Login />} />
 				<Route path='courses/:courseId' element={<GoToCourse />} />
-				<Route
-					path='courses/add'
-					element={
-						<CreateCourse
-							itemAuthors={authors}
-							changeIsShowCreateCourse={changeIsShowCreateCourse}
-							addNewAuthors={addNewAuthors}
-							onCreateNewCourse={onCreateNewCourse}
-						/>
-					}
-				/>
+				<Route path='courses/add' element={<CreateCourse />} />
 				<Route
 					path='courses'
 					element={<Courses onSearchCourses={onSearchCourses} />}

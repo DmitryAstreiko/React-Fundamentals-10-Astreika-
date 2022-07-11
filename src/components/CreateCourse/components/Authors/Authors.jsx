@@ -3,11 +3,16 @@ import '../../../../App.css';
 import AddAuthor from '../AddAuthor/AddAuthor';
 import Duration from '../Duration/Duration';
 import AuthorItem from '../AuthorItem/AuthorItem';
+import { useSelector } from 'react-redux';
 
 function Authors(props) {
-	const [allAuthors, setAuthors] = useState(props.itemsAuthors);
+	//const [allAuthors, setAuthors] = useState(props.itemsAuthors);
 	const [selectedAuthors, setSelectedAuthors] = useState([]);
 	const [abilityAuthors, setAbilityAuthors] = useState(props.itemsAuthors);
+	//const [abilityAuthors, setAbilityAuthors] = useState([]);
+
+	let allAuthors = useSelector((state) => state.authors);
+	//setAbilityAuthors(allAuthors);
 
 	function onDuration(text) {
 		props.onDurationChange(text);
@@ -70,7 +75,7 @@ function Authors(props) {
 	}
 
 	useEffect(() => {
-		setAuthors(props.itemsAuthors);
+		//setAuthors(props.itemsAuthors);
 
 		let tempAuthors = [];
 		tempAuthors.push(...allAuthors);

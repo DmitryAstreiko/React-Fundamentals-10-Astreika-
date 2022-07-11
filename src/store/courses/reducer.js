@@ -12,11 +12,11 @@ export const coursesReducer = (state = coursesInitialState, action) => {
 		case LOAD_COURSES:
 			return [action.payload];
 		case ADD_COURSE:
-			return [...state, action.payload];
+			return [...state, action.payload[0]];
 		case UPDATE_COURSE:
 			return state;
 		case DELETE_COURSE:
-			return state;
+			return state.splice(action.payload, 1);
 		default:
 			return state;
 	}

@@ -3,13 +3,26 @@ import '../../../../App.css';
 import Button from '../../../../common/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteCoursesAction } from '../../../../store/courses/actions';
 
 function CourseCard(props) {
 	let navigate = useNavigate();
 
+	const dispatch = useDispatch();
+
 	function showCourse(id) {
 		navigate(`/courses/${id}`);
 	}
+
+	function editCourse(id) {
+		navigate(`/courses`);
+	}
+
+	function deleteCourse(index) {
+		dispatch(deleteCoursesAction(index));
+	}
+
 	return (
 		<div className='CourseCardMain'>
 			<div className='CourseCardTitleDesc'>
@@ -37,6 +50,16 @@ function CourseCard(props) {
 							buttonText='Show course'
 							type='button'
 							onButtonPress={() => showCourse(props.id)}
+						/>
+						<Button
+							buttonText='Edit'
+							type='button'
+							onButtonPress={() => editCourse(props.id)}
+						/>
+						<Button
+							buttonText='Delete'
+							type='button'
+							onButtonPress={() => deleteCourse(props.index)}
 						/>
 					</div>
 				</div>
