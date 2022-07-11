@@ -15,7 +15,7 @@ function CourseInfo(props) {
 
 	return (
 		<div>
-			<Header userName={props.userName} />
+			<Header />
 			<div className='CourseInfoMain'>
 				<Button
 					type='button'

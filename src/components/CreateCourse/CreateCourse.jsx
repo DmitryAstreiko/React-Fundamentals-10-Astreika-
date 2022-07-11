@@ -99,7 +99,7 @@ function CreateCourse(props) {
 
 	return (
 		<div>
-			<Header userName={props.userName} />
+			<Header />
 			<div className='CreateCourseMain'>
 				<label className='CreateCourseLabels'>Title</label>
 				<div className='CreateCourseTitle'>

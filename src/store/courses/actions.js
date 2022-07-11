@@ -1,3 +1,3 @@
-import { GET_COURSES } from './types.js';
+import { LOAD_COURSES } from './types.js';
 
-export const getCoursesAction = (payload) => ({ type: GET_COURSES, payload });
+export const loadCoursesAction = (payload) => ({ type: LOAD_COURSES, payload });

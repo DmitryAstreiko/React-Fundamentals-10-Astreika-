@@ -1,2 +1,2 @@
-export const GET_AUTHORS = 'authors/GET_AUTHORS';
+export const LOAD_AUTHORS = 'authors/LOAD_AUTHORS';
 export const ADD_AUTHOR = 'authors/ADD_AUTHOR';

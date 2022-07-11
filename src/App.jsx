@@ -2,30 +2,27 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import Courses from './components/Courses/Courses';
 import CreateCourse from './components/CreateCourse/CreateCourse';
-import { mockedAuthorsList, mockedCoursesList } from './constants';
 import { v4 as uuid } from 'uuid';
 import Registration from './components/Registration/Registration';
 import { Login } from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
-import CoursesNew from './components/Courses/CoursesNew';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useParams } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCourses, getAuthors as getAuthorsService } from './service';
+import { useDispatch } from 'react-redux';
+import { loadCourses, loadAuthors } from './service';
 
 function App() {
 	const [isShowCreateCourse, setIsShowCreateCourse] = useState(false);
-	const [authors, setAuthors] = useState(getAuthors());
-	const [coursesItem, setCoursesItem] = useState(getCources());
-	const [allCoursesItem, setAllCoursesItem] = useState(getCources());
+	const [authors, setAuthors] = useState();
+	const [coursesItem, setCoursesItem] = useState();
+	const [allCoursesItem, setAllCoursesItem] = useState();
 	const [userName, setUserName] = useState('Test User');
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(getCourses());
-		//getCourses();
-		dispatch(getAuthorsService());
+		loadCourses(dispatch);
+		//loadAuthors(dispatch);
 	}, []);
 
 	function onCreateNewCourse(newCourse) {
@@ -34,10 +31,6 @@ function App() {
 		setCoursesItem(tempArray);
 		setAllCoursesItem(tempArray);
 		setIsShowCreateCourse(!isShowCreateCourse);
-	}
-
-	function getUserName(text) {
-		setUserName(text);
 	}
 
 	function addNewAuthors(text) {
@@ -70,14 +63,6 @@ function App() {
 
 	function changeIsShowCreateCourse() {
 		setIsShowCreateCourse(!isShowCreateCourse);
-	}
-
-	function getAuthors() {
-		return mockedAuthorsList;
-	}
-
-	function getCources() {
-		return mockedCoursesList;
 	}
 
 	function getCurrentAuthors(courseAuthors) {
@@ -115,9 +100,9 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path='/' element={<CoursesNew />} />
+				<Route path='/' element={<Login />} />
 				<Route path='registration' element={<Registration />} />
-				<Route path='login' element={<Login userName={getUserName} />} />
+				<Route path='login' element={<Login />} />
 				<Route path='courses/:courseId' element={<GoToCourse />} />
 				<Route
 					path='courses/add'
@@ -133,15 +118,7 @@ function App() {
 				/>
 				<Route
 					path='courses'
-					element={
-						<Courses
-							courseItems={coursesItem}
-							itemAuthors={authors}
-							changeIsShowCreateCourse={changeIsShowCreateCourse}
-							onSearchCourses={onSearchCourses}
-							userName={userName}
-						/>
-					}
+					element={<Courses onSearchCourses={onSearchCourses} />}
 				/>
 			</Routes>
 		</BrowserRouter>

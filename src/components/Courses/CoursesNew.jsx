@@ -11,7 +11,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { useDispatch, useSelector } from 'react-redux';
-//https://www.youtube.com/watch?v=dgM9OGVfKCQ
 
 function CoursesNew() {
 	//const [itemAuthors] = useState(props.itemAuthors);
@@ -77,6 +76,7 @@ function CoursesNew() {
 						id={item.id}
 						title={item.title}
 						description={item.description}
+						authors={getAuthorsByIds(item.authors)}
 						duration={getCourseDuration(item.duration)}
 						created={formatCreationDate(item.creationDate)}
 					/>

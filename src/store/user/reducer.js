@@ -1,5 +1,4 @@
-import { GET_USER } from './types';
-//import { getUser } from '../../service';
+import { LOGIN_USER, LOGOUT_USER } from './types';
 
 const userInitialState = {
 	isAuth: false, // default value - false. After success login - true
@@ -11,8 +10,22 @@ const userInitialState = {
 
 export const userReducer = (state = userInitialState, action) => {
 	switch (action.type) {
-		case GET_USER:
-			return [...state, 'asdads'];
+		case LOGIN_USER:
+			return {
+				...state,
+				isAuth: true,
+				name: action.payload.user.name,
+				email: action.payload.user.email,
+				token: action.payload.result,
+			};
+		case LOGOUT_USER:
+			return {
+				...state,
+				isAuth: false,
+				name: '',
+				email: '',
+				token: '',
+			};
 		default:
 			return state;
 	}

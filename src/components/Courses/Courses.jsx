@@ -8,10 +8,16 @@ import formatCreationDate from '../../helpers/formatCreationDate';
 import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Courses(props) {
-	const [itemAuthors] = useState(props.itemAuthors);
+	//const [itemAuthors] = useState(props.itemAuthors);
 	let navigate = useNavigate();
+
+	const courses = useSelector((state) => state.courses);
+	const itemAuthors = useSelector((state) => state.authors);
+
+	const isLogIn = useSelector((state) => state.isAuth);
 
 	function changeShowCreateCourse() {
 		props.changeIsShowCreateCourse();
@@ -39,15 +45,14 @@ function Courses(props) {
 	}
 
 	useEffect(() => {
-		const currentToken = localStorage.getItem('courseUserToken');
-		if (currentToken === null) {
+		if (isLogIn === false) {
 			navigate(`/login`);
 		}
 	});
 
 	return (
 		<div>
-			<Header isRegistration={false} userName={props.userName} />
+			<Header />
 			<div className='CoursesMain'>
 				<div className='CoursesSearchAddCourse'>
 					<SearchBar onSearchCourse={onSearchCourse} />
@@ -59,13 +64,12 @@ function Courses(props) {
 						/>
 					</div>
 				</div>
-				{props.courseItems.map((item, index) => (
+				{courses.map((item, index) => (
 					<CourseCard
 						key={index}
 						id={item.id}
 						title={item.title}
 						description={item.description}
-						authors={getAuthorsByIds(item.authors)}
 						duration={getCourseDuration(item.duration)}
 						created={formatCreationDate(item.creationDate)}
 					/>
