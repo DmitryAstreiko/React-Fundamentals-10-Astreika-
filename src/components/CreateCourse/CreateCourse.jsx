@@ -5,12 +5,15 @@ import Authors from './components/Authors/Authors';
 import Input from '../../common/Input/Inpit';
 import { v4 as uuid } from 'uuid';
 import Moment from 'moment';
+import { useNavigate } from 'react-router-dom';
+import Header from '../Header/Header';
 
 function CreateCourse(props) {
 	const [titleCourse, setTitleCourse] = useState(null);
 	const [descCourse, setDescCourse] = useState(null);
 	const [durCourse, setDurCourse] = useState(null);
 	const [authorsCourse, setAuthorsCourse] = useState(null);
+	let navigate = useNavigate();
 
 	function onAuthorsSelected(text) {
 		setAuthorsCourse(text);
@@ -22,21 +25,22 @@ function CreateCourse(props) {
 		setTitleCourse(text);
 	}
 
-	function onCreateCourse(id) {
+	function onCreateCourse() {
 		if (checkFields()) {
 			props.onCreateNewCourse(prepareCourse());
+			navigate(`/courses`);
 		}
 	}
 
 	function prepareCourse() {
-		var authorsId = [];
+		let authorsId = [];
 		if (authorsCourse) {
 			authorsCourse?.forEach((element) => {
 				authorsId.push(element.id);
 			});
 		}
 
-		var course = [];
+		let course = [];
 
 		course.push({
 			id: uuid(),
@@ -88,36 +92,49 @@ function CreateCourse(props) {
 		props.addNewAuthors(value);
 	}
 
-	function changeShowCreateCourse() {
+	function onCancelAdding() {
 		props.changeIsShowCreateCourse();
+		navigate(`/courses`);
 	}
 
 	return (
-		<div className='CreateCourseMain'>
-			<label className='CreateCourseLabels'>Title</label>
-			<div className='CreateCourseTitle'>
-				<Input placeholderText='Enter title...' onChange={onInputText} />
-				<div className='CreateCourseButtons'>
-					<Button
-						buttonText='Cancel adding'
-						onButtonPress={changeShowCreateCourse}
+		<div>
+			<Header userName={props.userName} />
+			<div className='CreateCourseMain'>
+				<label className='CreateCourseLabels'>Title</label>
+				<div className='CreateCourseTitle'>
+					<Input
+						placeholderText='Enter title...'
+						type='text'
+						onChange={onInputText}
 					/>
-					<Button buttonText='Create course' onButtonPress={onCreateCourse} />
+					<div className='CreateCourseButtons'>
+						<Button
+							buttonText='Cancel adding'
+							onButtonPress={onCancelAdding}
+							type='button'
+						/>
+						<Button
+							buttonText='Create course'
+							onButtonPress={onCreateCourse}
+							type='button'
+						/>
+					</div>
 				</div>
+				<label className='CreateCourseLabels'>Description</label>
+				<textarea
+					minLength='2'
+					className='CreateCourseTextArea'
+					placeholder='Enter description'
+					onChange={(event) => setDescCourse(event.target.value)}
+				></textarea>
+				<Authors
+					itemsAuthors={props.itemAuthors}
+					AddAuthor={addAuthors}
+					onDurationChange={onDurationChange}
+					onAuthorsSelected={onAuthorsSelected}
+				/>
 			</div>
-			<label className='CreateCourseLabels'>Description</label>
-			<textarea
-				minLength='2'
-				className='CreateCourseTextArea'
-				placeholder='Enter description'
-				onChange={(event) => setDescCourse(event.target.value)}
-			></textarea>
-			<Authors
-				itemsAuthors={props.itemAuthors}
-				AddAuthor={addAuthors}
-				onDurationChange={onDurationChange}
-				onAuthorsSelected={onAuthorsSelected}
-			/>
 		</div>
 	);
 }

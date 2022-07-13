@@ -19,7 +19,7 @@ function Authors(props) {
 		let tempSelectedAuthors = [];
 		tempSelectedAuthors.push(...selectedAuthors);
 
-		var indexSelectedId = tempSelectedAuthors.findIndex(
+		const indexSelectedId = tempSelectedAuthors.findIndex(
 			(elem) => elem.id === id
 		);
 
@@ -44,11 +44,11 @@ function Authors(props) {
 		tempSelectedAuthors.push(...selectedAuthors);
 		if (allAuthors) {
 			allAuthors?.forEach((element) => {
-				var foundId = element.id.toLowerCase().indexOf(id, 0);
+				const foundId = element.id.toLowerCase().indexOf(id, 0);
 				if (foundId > -1) {
 					tempSelectedAuthors.push(element);
 
-					var indexAbilityId = tempAbilityAuthors.findIndex(
+					const indexAbilityId = tempAbilityAuthors.findIndex(
 						(elem) => elem.id === id
 					);
 

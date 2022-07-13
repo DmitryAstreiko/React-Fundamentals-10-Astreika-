@@ -1,16 +1,21 @@
 import './App.css';
 import React, { useState } from 'react';
-import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
 import CreateCourse from './components/CreateCourse/CreateCourse';
 import { mockedAuthorsList, mockedCoursesList } from './constants';
 import { v4 as uuid } from 'uuid';
+import Registration from './components/Registration/Registration';
+import { Login } from './components/Login/Login';
+import CourseInfo from './components/CourseInfo/CourseInfo';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 function App() {
 	const [isShowCreateCourse, setIsShowCreateCourse] = useState(false);
 	const [authors, setAuthors] = useState(getAuthors());
 	const [coursesItem, setCoursesItem] = useState(getCources());
 	const [allCoursesItem, setAllCoursesItem] = useState(getCources());
+	const [userName, setUserName] = useState('Test User');
 
 	function onCreateNewCourse(newCourse) {
 		const tempArray = [...coursesItem, newCourse[0]];
@@ -20,6 +25,10 @@ function App() {
 		setIsShowCreateCourse(!isShowCreateCourse);
 	}
 
+	function getUserName(text) {
+		setUserName(text);
+	}
+
 	function addNewAuthors(text) {
 		const tempAuthors = [...authors, { id: uuid(), name: text }];
 
@@ -27,15 +36,15 @@ function App() {
 	}
 
 	function onSearchCourses(text) {
-		var resArray = [];
+		let resArray = [];
 
 		if (text === '') {
 			setCoursesItem(allCoursesItem);
 		} else {
 			if (coursesItem) {
 				coursesItem?.forEach((element) => {
-					var foundTitle = element.title.toLowerCase().indexOf(text, 0);
-					var foundId = element.id.toLowerCase().indexOf(text, 0);
+					const foundTitle = element.title.toLowerCase().indexOf(text, 0);
+					const foundId = element.id.toLowerCase().indexOf(text, 0);
 					if (foundTitle > -1 || foundId > -1) {
 						resArray.push(element);
 					}
@@ -60,25 +69,71 @@ function App() {
 		return mockedCoursesList;
 	}
 
+	function getCurrentAuthors(courseAuthors) {
+		let resAuthors = [];
+		courseAuthors.forEach((element) => {
+			let resFilter = authors.filter((x) => x.id === element);
+			if (resFilter) {
+				resAuthors.push(...resFilter);
+			}
+		});
+
+		return resAuthors;
+	}
+
+	function getCurrentCourse(courseId) {
+		return allCoursesItem.filter((x) => x.id === courseId);
+	}
+
+	function GoToCourse() {
+		const params = useParams();
+
+		const courseItem = getCurrentCourse(params.courseId);
+
+		const courseAuthors = getCurrentAuthors(courseItem[0].authors);
+
+		return (
+			<CourseInfo
+				courseItem={courseItem}
+				courseAuthors={courseAuthors}
+				userName={userName}
+			/>
+		);
+	}
+
 	return (
-		<div>
-			<Header />
-			{isShowCreateCourse ? (
-				<CreateCourse
-					itemAuthors={authors}
-					changeIsShowCreateCourse={changeIsShowCreateCourse}
-					addNewAuthors={addNewAuthors}
-					onCreateNewCourse={onCreateNewCourse}
+		<BrowserRouter>
+			<Routes>
+				<Route path='/' element={<Login />} />
+				<Route path='registration' element={<Registration />} />
+				<Route path='login' element={<Login userName={getUserName} />} />
+				<Route path='courses/:courseId' element={<GoToCourse />} />
+				<Route
+					path='courses/add'
+					element={
+						<CreateCourse
+							itemAuthors={authors}
+							changeIsShowCreateCourse={changeIsShowCreateCourse}
+							addNewAuthors={addNewAuthors}
+							onCreateNewCourse={onCreateNewCourse}
+							userName={userName}
+						/>
+					}
 				/>
-			) : (
-				<Courses
-					items={coursesItem}
-					itemAuthors={authors}
-					changeIsShowCreateCourse={changeIsShowCreateCourse}
-					onSearchCourses={onSearchCourses}
+				<Route
+					path='courses'
+					element={
+						<Courses
+							courseItems={coursesItem}
+							itemAuthors={authors}
+							changeIsShowCreateCourse={changeIsShowCreateCourse}
+							onSearchCourses={onSearchCourses}
+							userName={userName}
+						/>
+					}
 				/>
-			)}
-		</div>
+			</Routes>
+		</BrowserRouter>
 	);
 }
 
