@@ -2,21 +2,17 @@ import React, { useState } from 'react';
 import '../../App.css';
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Inpit';
-import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import { useDispatch } from 'react-redux';
 import { loginUserAction } from '../../store/user/actions';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Login() {
 	const [emailUser, setEmailUser] = useState(null);
 	const [passUser, setPassUser] = useState(null);
 
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
-
-	function handleClick() {
-		navigate(`/registration`);
-	}
 
 	function onChangeEmail(text) {
 		setEmailUser(text);
@@ -83,9 +79,7 @@ export function Login() {
 						<label>
 							If you not have an account you can{' '}
 							<b>
-								<label onClick={handleClick}>
-									<b>Registration</b>
-								</label>
+								<Link to='/registration'>Registration</Link>
 							</b>
 						</label>
 					</p>

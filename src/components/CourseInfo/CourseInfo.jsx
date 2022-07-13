@@ -5,11 +5,11 @@ import getCourseDuration from '../../helpers/getCourseDuration';
 import Header from '../Header/Header';
 import formatCreationDate from '../../helpers/formatCreationDate';
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 function CourseInfo(props) {
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 
 	const isLogIn = useSelector((state) => state.users.isAuth);
 

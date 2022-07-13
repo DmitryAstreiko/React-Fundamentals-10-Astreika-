@@ -9,7 +9,7 @@ function Registration() {
 	const [loginUser, setLoginUser] = useState(null);
 	const [passUser, setPassUser] = useState(null);
 	const [emailUser, setEmailUser] = useState(null);
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 
 	function onChangeLogin(text) {
 		setLoginUser(text);

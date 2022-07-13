@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../App.css';
 import Button from '../../common/Button/Button';
 import Authors from './components/Authors/Authors';
@@ -9,14 +9,24 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import { addCoursesAction } from '../../store/courses/actions';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-function CreateCourse() {
+function CourseForm() {
 	const [titleCourse, setTitleCourse] = useState(null);
 	const [descCourse, setDescCourse] = useState(null);
 	const [durCourse, setDurCourse] = useState(null);
 	const [authorsCourse, setAuthorsCourse] = useState(null);
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const isLogIn = useSelector((state) => state.users.isAuth);
+
+	useEffect(() => {
+		//const currentToken = localStorage.getItem('courseUserToken');
+		//if (currentToken === null) {
+		if (isLogIn === false) {
+			navigate(`/login`);
+		}
+	});
 
 	function onAuthorsSelected(text) {
 		setAuthorsCourse(text);
@@ -135,4 +145,4 @@ function CreateCourse() {
 	);
 }
 
-export default CreateCourse;
+export default CourseForm;

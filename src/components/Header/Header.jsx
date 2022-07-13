@@ -7,7 +7,7 @@ import { logoutUserAction } from '../../store/user/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 function Header() {
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 
 	const userIsAuth = useSelector((state) => state.users.isAuth);
 	const userName = useSelector((state) => state.users.name);

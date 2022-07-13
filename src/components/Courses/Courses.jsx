@@ -13,9 +13,9 @@ import { useSelector } from 'react-redux';
 function Courses() {
 	const [courses, setCourses] = useState(useSelector((state) => state.courses));
 
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 
-	let allCoursesItem = useSelector((state) => state.courses);
+	const allCoursesItem = useSelector((state) => state.courses);
 
 	const itemAuthors = useSelector((state) => state.authors);
 

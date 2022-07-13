@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { deleteCoursesAction } from '../../../../store/courses/actions';
 
 function CourseCard(props) {
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 
 	const dispatch = useDispatch();
 

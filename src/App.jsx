@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useEffect } from 'react';
 import Courses from './components/Courses/Courses';
-import CreateCourse from './components/CreateCourse/CreateCourse';
+import CourseForm from './components/CourseForm/CourseForm';
 import Registration from './components/Registration/Registration';
 import { Login } from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
@@ -53,7 +53,7 @@ function App() {
 				<Route path='registration' element={<Registration />} />
 				<Route path='login' element={<Login />} />
 				<Route path='courses/:courseId' element={<GoToCourse />} />
-				<Route path='courses/add' element={<CreateCourse />} />
+				<Route path='courses/add' element={<CourseForm />} />
 				<Route path='courses' element={<Courses />} />
 			</Routes>
 		</BrowserRouter>

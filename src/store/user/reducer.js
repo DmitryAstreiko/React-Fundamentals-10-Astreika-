@@ -5,6 +5,7 @@ const userInitialState = {
 	name: null, // default value - empty string. After success login - name of user
 	email: null, // default value - empty string. After success login - email of user
 	token: null, // default value - empty string or token value from localStorage.
+	role: null,
 	// After success login - value from API /login response. See Swagger.
 };
 
@@ -17,6 +18,7 @@ export const userReducer = (state = userInitialState, action) => {
 				name: action.payload.user.name,
 				email: action.payload.user.email,
 				token: action.payload.result,
+				role: '',
 			};
 		case LOGOUT_USER:
 			return {
