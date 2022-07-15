@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../../App.css';
 
 function Input(props) {
-	const [inputValue, setInputValue] = useState('');
+	const [inputValue, setInputValue] = useState(props.value);
 
 	function onHandleClick(symbols) {
 		setInputValue(symbols);

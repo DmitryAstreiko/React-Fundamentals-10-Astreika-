@@ -4,6 +4,7 @@ import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Inpit';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
+import { loadUser } from '../../store/user/thunk';
 
 function Registration() {
 	const [loginUser, setLoginUser] = useState(null);
@@ -43,7 +44,7 @@ function Registration() {
 			email: emailUser,
 		};
 
-		const response = await fetch('http://localhost:4000/register', {
+		/*const response = await fetch('http://localhost:4000/register', {
 			method: 'POST',
 			body: JSON.stringify(newUser),
 			headers: {
@@ -51,7 +52,9 @@ function Registration() {
 			},
 		});
 
-		const result = await response.json();
+		const result = await response.json();*/
+
+		const result = loadUser(newUser);
 
 		if (result.successful === true) {
 			navigate(`/login`);

@@ -8,18 +8,21 @@ import formatCreationDate from '../../helpers/formatCreationDate';
 import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { loadCourses } from '../../store/courses/thunk';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadAuthors } from '../../store/authors/thunk';
 
 function Courses() {
 	const [courses, setCourses] = useState(useSelector((state) => state.courses));
 
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const allCoursesItem = useSelector((state) => state.courses);
-
 	const itemAuthors = useSelector((state) => state.authors);
-
-	const isLogIn = useSelector((state) => state.users.isAuth);
+	const userInfo = useSelector((state) => state.users);
+	const isLogIn = userInfo.isAuth;
+	const userRole = userInfo.role;
 
 	function changeShowCreateCourse() {
 		navigate(`/courses/add`);
@@ -64,11 +67,14 @@ function Courses() {
 	}
 
 	useEffect(() => {
-		//const currentToken = localStorage.getItem('courseUserToken');
-		//if (currentToken === null) {
 		if (isLogIn === false) {
 			navigate(`/login`);
-		}
+		} /*else {
+			loadCourses(dispatch);
+
+			
+			loadAuthors(dispatch);
+		}*/
 	});
 
 	return (
@@ -77,13 +83,15 @@ function Courses() {
 			<div className='CoursesMain'>
 				<div className='CoursesSearchAddCourse'>
 					<SearchBar onSearchCourse={onSearchCourse} />
-					<div>
-						<Button
-							buttonText='Add new course'
-							onButtonPress={changeShowCreateCourse}
-							type='button'
-						/>
-					</div>
+					{userRole === 'ADMIN' && (
+						<div>
+							<Button
+								buttonText='Add new course'
+								onButtonPress={changeShowCreateCourse}
+								type='button'
+							/>
+						</div>
+					)}
 				</div>
 				{courses.map((item, index) => (
 					<CourseCard

@@ -1,4 +1,4 @@
-import { loadCoursesAction } from './store/courses/actions';
+/*import { loadCoursesAction } from './store/courses/actions';
 import { loadAuthorsAction } from './store/authors/actions';
 //import { loginUserAction } from './store/user/actions';
 
@@ -16,7 +16,7 @@ export const loadAuthors = async (dispatch) => {
 			.then((Response) => Response.json())
 			.then((data) => dispatch(loadAuthorsAction(data.result)));
 	} catch (error) {}
-};
+};*/
 
 /*export const loadUser = (newUser) => async (dispatch) => {
 	try {

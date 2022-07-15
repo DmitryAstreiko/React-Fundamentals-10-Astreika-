@@ -90,7 +90,7 @@ function Authors(props) {
 		<div className='AuthorsMain'>
 			<div className='AuthorsAddAndDuration'>
 				<AddAuthor />
-				<Duration onDuration={onDuration} />
+				<Duration onDuration={onDuration} value={props.durationValue} />
 			</div>
 			<div className='AuthorsListAndDelete'>
 				<label className='CreateCourseLabelsParagraph'>

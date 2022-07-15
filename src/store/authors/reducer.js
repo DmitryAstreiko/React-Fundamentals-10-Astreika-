@@ -8,7 +8,8 @@ export const authorsReducer = (state = authorsInitialState, action) => {
 		case LOAD_AUTHORS:
 			return action.payload;
 		case ADD_AUTHOR:
-			return [...state, { id: uuid(), name: action.payload }];
+			//return [...state, { id: uuid(), name: action.payload }];
+			return [...state, action.payload];
 		default:
 			return state;
 	}

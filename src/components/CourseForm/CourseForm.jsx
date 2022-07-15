@@ -7,18 +7,26 @@ import { v4 as uuid } from 'uuid';
 import Moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
-import { addCoursesAction } from '../../store/courses/actions';
+//import { addCoursesAction } from '../../store/courses/actions';
+import { addCourse, updateCourse } from '../../store/courses/thunk';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-function CourseForm() {
+function CourseForm(props) {
 	const [titleCourse, setTitleCourse] = useState(null);
 	const [descCourse, setDescCourse] = useState(null);
 	const [durCourse, setDurCourse] = useState(null);
 	const [authorsCourse, setAuthorsCourse] = useState(null);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const isLogIn = useSelector((state) => state.users.isAuth);
+
+	const userInfo = useSelector((state) => state.users);
+	const token = userInfo.token;
+	const isLogIn = userInfo.isAuth;
+	const addMode = props.addMode;
+	const updateMode = props.updateMode;
+	const allCourses = useSelector((state) => state.courses);
+	const courseForUpdate = props.course;
 
 	useEffect(() => {
 		//const currentToken = localStorage.getItem('courseUserToken');
@@ -40,8 +48,25 @@ function CourseForm() {
 
 	function onCreateCourse() {
 		if (checkFields()) {
-			dispatch(addCoursesAction(prepareCourse()));
-			navigate(`/courses`);
+			//dispatch(addCoursesAction(prepareCourse()));
+			const countBefore = allCourses.length;
+			addCourse(prepareCourse(), token);
+			const countAfter = allCourses.length;
+			if (countAfter > countBefore) {
+				navigate(`/courses`);
+			}
+		}
+	}
+
+	function onUpdateCourse() {
+		if (checkFields()) {
+			//dispatch(addCoursesAction(prepareCourse()));
+			const countBefore = allCourses.length;
+			updateCourse(props.courseForUpdate.id, prepareCourse(), token);
+			const countAfter = allCourses.length;
+			if (countAfter > countBefore) {
+				navigate(`/courses`);
+			}
 		}
 	}
 
@@ -56,10 +81,10 @@ function CourseForm() {
 		let course = [];
 
 		course.push({
-			id: uuid(),
+			//id: uuid(),
 			title: titleCourse,
 			description: descCourse,
-			creationDate: Moment().format('MM/DD/YYYY'),
+			//creationDate: Moment().format('MM/DD/YYYY'),
 			duration: durCourse,
 			authors: authorsId,
 		});
@@ -115,18 +140,28 @@ function CourseForm() {
 						placeholderText='Enter title...'
 						type='text'
 						onChange={onInputText}
-					/>
+						value={updateMode ? courseForUpdate[0].title : ''}
+					></Input>
 					<div className='CreateCourseButtons'>
 						<Button
 							buttonText='Cancel adding'
 							onButtonPress={onCancelAdding}
 							type='button'
 						/>
-						<Button
-							buttonText='Create course'
-							onButtonPress={onCreateCourse}
-							type='button'
-						/>
+						{addMode && (
+							<Button
+								buttonText='Create course'
+								onButtonPress={onCreateCourse}
+								type='button'
+							/>
+						)}
+						{updateMode && (
+							<Button
+								buttonText='Update course'
+								onButtonPress={onUpdateCourse}
+								type='button'
+							/>
+						)}
 					</div>
 				</div>
 				<label className='CreateCourseLabels'>Description</label>
@@ -135,10 +170,13 @@ function CourseForm() {
 					className='CreateCourseTextArea'
 					placeholder='Enter description'
 					onChange={(event) => setDescCourse(event.target.value)}
-				></textarea>
+				>
+					{updateMode ? courseForUpdate[0].description : ''}
+				</textarea>
 				<Authors
 					onDurationChange={onDurationChange}
 					onAuthorsSelected={onAuthorsSelected}
+					durationValue={updateMode ? courseForUpdate[0].duration : ''}
 				/>
 			</div>
 		</div>

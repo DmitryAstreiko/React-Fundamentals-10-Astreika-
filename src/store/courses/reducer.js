@@ -14,7 +14,8 @@ export const coursesReducer = (state = coursesInitialState, action) => {
 		case ADD_COURSE:
 			return [...state, action.payload[0]];
 		case UPDATE_COURSE:
-			return state;
+			const newCourses = state.filter((x) => x.id !== action.payload[0].id);
+			return [...newCourses, action.payload[0]];
 		case DELETE_COURSE:
 			//return state.splice(action.payload, 1);
 			return state.filter((x) => x.id !== action.payload);

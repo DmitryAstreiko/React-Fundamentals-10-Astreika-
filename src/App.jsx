@@ -7,8 +7,10 @@ import { Login } from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useParams } from 'react-router';
+import { loadCourses } from './store/courses/thunk';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadCourses, loadAuthors } from './service';
+import { loadAuthors } from './store/authors/thunk';
+import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 
 function App() {
 	let allCoursesItem = useSelector((state) => state.courses);
@@ -46,15 +48,33 @@ function App() {
 		return <CourseInfo courseItem={courseItem} courseAuthors={courseAuthors} />;
 	}
 
+	function GoToUpdateCourse() {
+		const params = useParams();
+
+		const courseItem = getCurrentCourse(params.courseId);
+
+		return <CourseForm updateMode='true' course={courseItem} />;
+	}
+
 	return (
 		<BrowserRouter>
 			<Routes>
 				<Route path='/' element={<Login />} />
-				<Route path='registration' element={<Registration />} />
-				<Route path='login' element={<Login />} />
-				<Route path='courses/:courseId' element={<GoToCourse />} />
-				<Route path='courses/add' element={<CourseForm />} />
-				<Route path='courses' element={<Courses />} />
+				<Route path='/registration' element={<Registration />} />
+				<Route path='/login' element={<Login />} />
+				<Route path='/courses/:courseId' element={<GoToCourse />} />
+				<Route path='/courses' element={<Courses />} />
+				<Route path='/users/me' element={<Login />} />
+				<Route
+					path='/courses/add'
+					element={
+						<PrivateRoute>{<CourseForm addMode='true' />} </PrivateRoute>
+					}
+				/>
+				<Route
+					path='/courses/update/:courseId'
+					element={<PrivateRoute>{<GoToUpdateCourse />} </PrivateRoute>}
+				/>
 			</Routes>
 		</BrowserRouter>
 	);
