@@ -3,7 +3,7 @@ import { Logo } from './components/Logo/Logo';
 import Button from '../../common/Button/Button';
 import '../../App.css';
 import { useNavigate } from 'react-router-dom';
-import { logoutUserAction } from '../../store/user/actions';
+//import { logoutUserAction } from '../../store/user/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../store/user/thunk';
 
@@ -17,7 +17,7 @@ function Header() {
 
 	function onLogout() {
 		//dispatch(logoutUserAction());
-		logoutUser(localStorage.getItem('courseUserToken'));
+		logoutUser(localStorage.getItem('courseUserToken'))(dispatch);
 		localStorage.removeItem('courseUserToken');
 		navigate(`/login`);
 	}

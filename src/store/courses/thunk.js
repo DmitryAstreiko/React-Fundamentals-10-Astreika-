@@ -34,7 +34,7 @@ export const loadCourses = async (dispatch) => {
 export const deleteCourse = (courseId, userToken) => async (dispatch) => {
 	try {
 		const response = await fetch(`http://localhost:4000/courses/${courseId}`, {
-			method: 'PATCH',
+			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',
 				authorization: userToken,
@@ -43,7 +43,7 @@ export const deleteCourse = (courseId, userToken) => async (dispatch) => {
 
 		const result = await response.json();
 
-		if (result.successfull) {
+		if (result.successful) {
 			dispatch(deleteCoursesAction(courseId));
 		}
 	} catch (error) {}
@@ -56,16 +56,18 @@ export const addCourse = (courseInfo, userToken) => async (dispatch) => {
 			body: JSON.stringify(courseInfo),
 			headers: {
 				'Content-Type': 'application/json',
-				authorization: userToken,
+				Authorization: userToken,
 			},
 		});
 
 		const result = await response.json();
 
-		if (result.successfull) {
+		if (result.successful) {
 			dispatch(addCoursesAction(courseInfo));
 		}
-	} catch (error) {}
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 export const updateCourse =
@@ -85,7 +87,7 @@ export const updateCourse =
 
 			const result = await response.json();
 
-			if (result.successfull) {
+			if (result.successful) {
 				dispatch(updateCoursesAction(courseInfo));
 			}
 		} catch (error) {}

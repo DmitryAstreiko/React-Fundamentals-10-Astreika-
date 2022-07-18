@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import '../../App.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import CourseCard from './components/CourseCard/CourseCard';
@@ -8,17 +8,18 @@ import formatCreationDate from '../../helpers/formatCreationDate';
 import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { loadCourses } from '../../store/courses/thunk';
-import { useDispatch, useSelector } from 'react-redux';
-import { loadAuthors } from '../../store/authors/thunk';
+//import { loadCourses } from '../../store/courses/thunk';
+import { useSelector } from 'react-redux';
+//import { loadAuthors } from '../../store/authors/thunk';
 
 function Courses() {
-	const [courses, setCourses] = useState(useSelector((state) => state.courses));
+	//const [courses, setCourses] = useState(useSelector((state) => state.courses));
 
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	//const dispatch = useDispatch();
 
 	const allCoursesItem = useSelector((state) => state.courses);
+	let courses = useSelector((state) => state.courses);
 	const itemAuthors = useSelector((state) => state.authors);
 	const userInfo = useSelector((state) => state.users);
 	const isLogIn = userInfo.isAuth;
@@ -48,7 +49,7 @@ function Courses() {
 		let resArray = [];
 
 		if (text === '') {
-			setCourses(allCoursesItem);
+			courses = allCoursesItem;
 		} else {
 			if (courses) {
 				courses?.forEach((element) => {
@@ -61,7 +62,8 @@ function Courses() {
 			}
 
 			if (resArray.length > 0) {
-				setCourses(resArray);
+				//setCourses(resArray);
+				courses = resArray;
 			}
 		}
 	}

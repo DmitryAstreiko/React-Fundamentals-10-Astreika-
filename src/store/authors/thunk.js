@@ -15,13 +15,13 @@ export const addAuthor = (authorName, userToken) => async (dispatch) => {
 			body: JSON.stringify(authorName),
 			headers: {
 				'Content-Type': 'application/json',
-				authorization: userToken,
+				Authorization: userToken,
 			},
 		});
 
 		const result = await response.json();
 
-		if (result.successfull) {
+		if (result.successful) {
 			dispatch(addAuthorsAction(authorName));
 		}
 	} catch (error) {}

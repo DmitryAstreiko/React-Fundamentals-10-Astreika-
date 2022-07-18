@@ -3,8 +3,8 @@ import '../../App.css';
 import Button from '../../common/Button/Button';
 import Authors from './components/Authors/Authors';
 import Input from '../../common/Input/Inpit';
-import { v4 as uuid } from 'uuid';
-import Moment from 'moment';
+//import { v4 as uuid } from 'uuid';
+//import Moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 //import { addCoursesAction } from '../../store/courses/actions';
@@ -50,7 +50,7 @@ function CourseForm(props) {
 		if (checkFields()) {
 			//dispatch(addCoursesAction(prepareCourse()));
 			const countBefore = allCourses.length;
-			addCourse(prepareCourse(), token);
+			addCourse(prepareCourse(), token)(dispatch);
 			const countAfter = allCourses.length;
 			if (countAfter > countBefore) {
 				navigate(`/courses`);
@@ -62,7 +62,7 @@ function CourseForm(props) {
 		if (checkFields()) {
 			//dispatch(addCoursesAction(prepareCourse()));
 			const countBefore = allCourses.length;
-			updateCourse(props.courseForUpdate.id, prepareCourse(), token);
+			updateCourse(props.courseForUpdate.id, prepareCourse(), token)(dispatch);
 			const countAfter = allCourses.length;
 			if (countAfter > countBefore) {
 				navigate(`/courses`);
@@ -78,16 +78,14 @@ function CourseForm(props) {
 			});
 		}
 
-		let course = [];
-
-		course.push({
+		const course = {
 			//id: uuid(),
 			title: titleCourse,
 			description: descCourse,
 			//creationDate: Moment().format('MM/DD/YYYY'),
-			duration: durCourse,
+			duration: parseInt(durCourse),
 			authors: authorsId,
-		});
+		};
 
 		return course;
 	}

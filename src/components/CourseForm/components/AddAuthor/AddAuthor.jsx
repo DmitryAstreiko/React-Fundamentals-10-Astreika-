@@ -5,16 +5,23 @@ import Input from '../../../../common/Input/Inpit';
 import { useDispatch } from 'react-redux';
 //import { addAuthorsAction } from '../../../../store/authors/actions';
 import { addAuthor } from '../../../../store/authors/thunk';
+import { useSelector } from 'react-redux';
 
 function AddAuthor() {
 	const [nameAuthor, setnameAuthor] = useState(null);
+	const userInfo = useSelector((state) => state.users);
+	const token = userInfo.token;
 
 	const dispatch = useDispatch();
 
 	function onAddAuthor() {
 		if (nameAuthor !== '') {
 			//dispatch(addAuthorsAction(nameAuthor));
-			addAuthor(nameAuthor);
+			const authorInfo = {
+				name: nameAuthor,
+			};
+
+			addAuthor(authorInfo, token)(dispatch);
 		}
 	}
 

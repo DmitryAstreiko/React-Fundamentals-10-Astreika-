@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../../../../App.css';
 import AddAuthor from '../AddAuthor/AddAuthor';
 import Duration from '../Duration/Duration';
@@ -6,10 +6,11 @@ import AuthorItem from '../AuthorItem/AuthorItem';
 import { useSelector } from 'react-redux';
 
 function Authors(props) {
-	const [selectedAuthors, setSelectedAuthors] = useState([]);
-	const [abilityAuthors, setAbilityAuthors] = useState(
-		useSelector((state) => state.authors)
-	);
+	//const [selectedAuthors, setSelectedAuthors] = useState([]);
+	//const [abilityAuthors, setAbilityAuthors] = useState(useSelector((state) => state.authors));
+
+	let selectedAuthors = [];
+	let abilityAuthors = useSelector((state) => state.authors);
 
 	let allAuthors = useSelector((state) => state.authors);
 
@@ -33,11 +34,13 @@ function Authors(props) {
 				name: tempSelectedAuthors[indexSelectedId].name,
 			});
 
-			setAbilityAuthors(tempAbilityAuthors);
+			//setAbilityAuthors(tempAbilityAuthors);
+			abilityAuthors = tempAbilityAuthors;
 
 			tempSelectedAuthors.splice(indexSelectedId, 1);
 
-			setSelectedAuthors(tempSelectedAuthors);
+			//setSelectedAuthors(tempSelectedAuthors);
+			selectedAuthors = tempSelectedAuthors;
 		}
 	}
 
@@ -46,9 +49,10 @@ function Authors(props) {
 		tempAbilityAuthors.push(...abilityAuthors);
 		let tempSelectedAuthors = [];
 		tempSelectedAuthors.push(...selectedAuthors);
+
 		if (allAuthors) {
 			allAuthors?.forEach((element) => {
-				const foundId = element.id.toLowerCase().indexOf(id, 0);
+				const foundId = element.id.indexOf(id);
 				if (foundId > -1) {
 					tempSelectedAuthors.push(element);
 
@@ -59,12 +63,14 @@ function Authors(props) {
 					if (indexAbilityId > -1) {
 						tempAbilityAuthors.splice(indexAbilityId, 1);
 
-						setAbilityAuthors(tempAbilityAuthors);
+						//setAbilityAuthors(tempAbilityAuthors);
+						abilityAuthors = tempAbilityAuthors;
 					}
 				}
 			});
 		}
-		setSelectedAuthors(tempSelectedAuthors);
+		//setSelectedAuthors(tempSelectedAuthors);
+		selectedAuthors = tempSelectedAuthors;
 
 		props.onAuthorsSelected(tempSelectedAuthors);
 	}

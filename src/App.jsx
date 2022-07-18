@@ -11,6 +11,7 @@ import { loadCourses } from './store/courses/thunk';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadAuthors } from './store/authors/thunk';
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
+import { loadUserMe } from './store/user/thunk';
 
 function App() {
 	let allCoursesItem = useSelector((state) => state.courses);
@@ -56,6 +57,20 @@ function App() {
 		return <CourseForm updateMode='true' course={courseItem} />;
 	}
 
+	function UserMe() {
+		let userInfo = useSelector((state) => state.users);
+		const token = localStorage.getItem('courseUserToken');
+		if (token) {
+			loadUserMe(token)(dispatch);
+
+			if (userInfo.isAuth) {
+				return <Courses />;
+			} else {
+				return <Login />;
+			}
+		}
+	}
+
 	return (
 		<BrowserRouter>
 			<Routes>
@@ -64,7 +79,7 @@ function App() {
 				<Route path='/login' element={<Login />} />
 				<Route path='/courses/:courseId' element={<GoToCourse />} />
 				<Route path='/courses' element={<Courses />} />
-				<Route path='/users/me' element={<Login />} />
+				<Route path='/users/me' element={<UserMe />} />
 				<Route
 					path='/courses/add'
 					element={

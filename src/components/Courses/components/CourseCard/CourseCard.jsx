@@ -10,7 +10,7 @@ import { deleteCourse } from '../../../../store/courses/thunk';
 function CourseCard(props) {
 	const navigate = useNavigate();
 
-	//const dispatch = useDispatch();
+	const dispatch = useDispatch();
 	const userInfo = useSelector((state) => state.users);
 	const role = userInfo.role;
 	const token = userInfo.token;
@@ -25,7 +25,7 @@ function CourseCard(props) {
 
 	function onDeleteCourse(id) {
 		//dispatch(deleteCoursesAction(id));
-		deleteCourse(id, token);
+		deleteCourse(id, token)(dispatch);
 	}
 
 	return (

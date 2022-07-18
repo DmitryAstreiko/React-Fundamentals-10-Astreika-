@@ -1,4 +1,4 @@
-import { LOGIN_USER, LOGOUT_USER } from './types';
+import { LOGIN_USER, LOGOUT_USER, USER_ME } from './types';
 
 const userInitialState = {
 	isAuth: false, // default value - false. After success login - true
@@ -32,6 +32,18 @@ export const userReducer = (state = userInitialState, action) => {
 				email: '',
 				token: '',
 				role: '',
+			};
+		case USER_ME:
+			return {
+				...state,
+				isAuth: true,
+				name:
+					action.payload.user.email === 'admin@email.com'
+						? 'ADMIN'
+						: action.payload.user.name,
+				email: action.payload.user.email,
+				role:
+					action.payload.user.email === 'admin@email.com' ? 'ADMIN' : 'User',
 			};
 		default:
 			return state;
