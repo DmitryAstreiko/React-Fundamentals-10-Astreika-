@@ -2,13 +2,26 @@ import React, { useState } from 'react';
 import '../../../../App.css';
 import Button from '../../../../common/Button/Button';
 import Input from '../../../../common/Input/Inpit';
+import { useDispatch } from 'react-redux';
+//import { addAuthorsAction } from '../../../../store/authors/actions';
+import { addAuthor } from '../../../../store/authors/thunk';
+import { useSelector } from 'react-redux';
 
-function AddAuthor(props) {
+function AddAuthor() {
 	const [nameAuthor, setnameAuthor] = useState(null);
+	const userInfo = useSelector((state) => state.users);
+	const token = userInfo.token;
 
-	function addAuthor() {
+	const dispatch = useDispatch();
+
+	function onAddAuthor() {
 		if (nameAuthor !== '') {
-			props.onAddAuthors(nameAuthor);
+			//dispatch(addAuthorsAction(nameAuthor));
+			const authorInfo = {
+				name: nameAuthor,
+			};
+
+			addAuthor(authorInfo, token)(dispatch);
 		}
 	}
 
@@ -29,7 +42,7 @@ function AddAuthor(props) {
 			<div style={{ textAlign: 'center' }}>
 				<Button
 					buttonText='Create author'
-					onButtonPress={addAuthor}
+					onButtonPress={onAddAuthor}
 					type='button'
 				/>
 			</div>

@@ -5,17 +5,27 @@ import getCourseDuration from '../../helpers/getCourseDuration';
 import Header from '../Header/Header';
 import formatCreationDate from '../../helpers/formatCreationDate';
 import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 function CourseInfo(props) {
-	let navigate = useNavigate();
+	const navigate = useNavigate();
+
+	const isLogIn = useSelector((state) => state.users.isAuth);
 
 	function showCourses() {
 		navigate(`/courses`);
 	}
 
+	useEffect(() => {
+		if (isLogIn === false) {
+			navigate(`/login`);
+		}
+	});
+
 	return (
 		<div>
-			<Header userName={props.userName} />
+			<Header />
 			<div className='CourseInfoMain'>
 				<Button
 					type='button'

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import '../../App.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import CourseCard from './components/CourseCard/CourseCard';
@@ -8,18 +8,25 @@ import formatCreationDate from '../../helpers/formatCreationDate';
 import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+//import { loadCourses } from '../../store/courses/thunk';
+import { useSelector } from 'react-redux';
+//import { loadAuthors } from '../../store/authors/thunk';
 
-function Courses(props) {
-	const [itemAuthors] = useState(props.itemAuthors);
-	let navigate = useNavigate();
+function Courses() {
+	//const [courses, setCourses] = useState(useSelector((state) => state.courses));
+
+	const navigate = useNavigate();
+	//const dispatch = useDispatch();
+
+	const allCoursesItem = useSelector((state) => state.courses);
+	let courses = useSelector((state) => state.courses);
+	const itemAuthors = useSelector((state) => state.authors);
+	const userInfo = useSelector((state) => state.users);
+	const isLogIn = userInfo.isAuth;
+	const userRole = userInfo.role;
 
 	function changeShowCreateCourse() {
-		props.changeIsShowCreateCourse();
 		navigate(`/courses/add`);
-	}
-
-	function onSearchCourse(text) {
-		props.onSearchCourses(text);
 	}
 
 	function getAuthorsByIds(arrayAuthors) {
@@ -38,28 +45,57 @@ function Courses(props) {
 		return resAuthors;
 	}
 
-	useEffect(() => {
-		const currentToken = localStorage.getItem('courseUserToken');
-		if (currentToken === null) {
-			navigate(`/login`);
+	function onSearchCourse(text) {
+		let resArray = [];
+
+		if (text === '') {
+			courses = allCoursesItem;
+		} else {
+			if (courses) {
+				courses?.forEach((element) => {
+					const foundTitle = element.title.toLowerCase().indexOf(text, 0);
+					const foundId = element.id.toLowerCase().indexOf(text, 0);
+					if (foundTitle > -1 || foundId > -1) {
+						resArray.push(element);
+					}
+				});
+			}
+
+			if (resArray.length > 0) {
+				//setCourses(resArray);
+				courses = resArray;
+			}
 		}
+	}
+
+	useEffect(() => {
+		if (isLogIn === false) {
+			navigate(`/login`);
+		} /*else {
+			loadCourses(dispatch);
+
+			
+			loadAuthors(dispatch);
+		}*/
 	});
 
 	return (
 		<div>
-			<Header isRegistration={false} userName={props.userName} />
+			<Header />
 			<div className='CoursesMain'>
 				<div className='CoursesSearchAddCourse'>
 					<SearchBar onSearchCourse={onSearchCourse} />
-					<div>
-						<Button
-							buttonText='Add new course'
-							onButtonPress={changeShowCreateCourse}
-							type='button'
-						/>
-					</div>
+					{userRole === 'ADMIN' && (
+						<div>
+							<Button
+								buttonText='Add new course'
+								onButtonPress={changeShowCreateCourse}
+								type='button'
+							/>
+						</div>
+					)}
 				</div>
-				{props.courseItems.map((item, index) => (
+				{courses.map((item, index) => (
 					<CourseCard
 						key={index}
 						id={item.id}
@@ -68,6 +104,7 @@ function Courses(props) {
 						authors={getAuthorsByIds(item.authors)}
 						duration={getCourseDuration(item.duration)}
 						created={formatCreationDate(item.creationDate)}
+						index={index}
 					/>
 				))}
 			</div>

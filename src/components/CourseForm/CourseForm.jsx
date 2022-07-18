@@ -1,19 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../App.css';
 import Button from '../../common/Button/Button';
 import Authors from './components/Authors/Authors';
 import Input from '../../common/Input/Inpit';
-import { v4 as uuid } from 'uuid';
-import Moment from 'moment';
+//import { v4 as uuid } from 'uuid';
+//import Moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
+//import { addCoursesAction } from '../../store/courses/actions';
+import { addCourse, updateCourse } from '../../store/courses/thunk';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-function CreateCourse(props) {
+function CourseForm(props) {
 	const [titleCourse, setTitleCourse] = useState(null);
 	const [descCourse, setDescCourse] = useState(null);
 	const [durCourse, setDurCourse] = useState(null);
 	const [authorsCourse, setAuthorsCourse] = useState(null);
-	let navigate = useNavigate();
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	const userInfo = useSelector((state) => state.users);
+	const token = userInfo.token;
+	const isLogIn = userInfo.isAuth;
+	const addMode = props.addMode;
+	const updateMode = props.updateMode;
+	const allCourses = useSelector((state) => state.courses);
+	const courseForUpdate = props.course;
+
+	useEffect(() => {
+		//const currentToken = localStorage.getItem('courseUserToken');
+		//if (currentToken === null) {
+		if (isLogIn === false) {
+			navigate(`/login`);
+		}
+	});
 
 	function onAuthorsSelected(text) {
 		setAuthorsCourse(text);
@@ -27,8 +48,25 @@ function CreateCourse(props) {
 
 	function onCreateCourse() {
 		if (checkFields()) {
-			props.onCreateNewCourse(prepareCourse());
-			navigate(`/courses`);
+			//dispatch(addCoursesAction(prepareCourse()));
+			const countBefore = allCourses.length;
+			addCourse(prepareCourse(), token)(dispatch);
+			const countAfter = allCourses.length;
+			if (countAfter > countBefore) {
+				navigate(`/courses`);
+			}
+		}
+	}
+
+	function onUpdateCourse() {
+		if (checkFields()) {
+			//dispatch(addCoursesAction(prepareCourse()));
+			const countBefore = allCourses.length;
+			updateCourse(props.courseForUpdate.id, prepareCourse(), token)(dispatch);
+			const countAfter = allCourses.length;
+			if (countAfter > countBefore) {
+				navigate(`/courses`);
+			}
 		}
 	}
 
@@ -40,16 +78,14 @@ function CreateCourse(props) {
 			});
 		}
 
-		let course = [];
-
-		course.push({
-			id: uuid(),
+		const course = {
+			//id: uuid(),
 			title: titleCourse,
 			description: descCourse,
-			creationDate: Moment().format('MM/DD/YYYY'),
-			duration: durCourse,
+			//creationDate: Moment().format('MM/DD/YYYY'),
+			duration: parseInt(durCourse),
 			authors: authorsId,
-		});
+		};
 
 		return course;
 	}
@@ -88,18 +124,13 @@ function CreateCourse(props) {
 		return true;
 	}
 
-	function addAuthors(value) {
-		props.addNewAuthors(value);
-	}
-
 	function onCancelAdding() {
-		props.changeIsShowCreateCourse();
 		navigate(`/courses`);
 	}
 
 	return (
 		<div>
-			<Header userName={props.userName} />
+			<Header />
 			<div className='CreateCourseMain'>
 				<label className='CreateCourseLabels'>Title</label>
 				<div className='CreateCourseTitle'>
@@ -107,18 +138,28 @@ function CreateCourse(props) {
 						placeholderText='Enter title...'
 						type='text'
 						onChange={onInputText}
-					/>
+						value={updateMode ? courseForUpdate[0].title : ''}
+					></Input>
 					<div className='CreateCourseButtons'>
 						<Button
 							buttonText='Cancel adding'
 							onButtonPress={onCancelAdding}
 							type='button'
 						/>
-						<Button
-							buttonText='Create course'
-							onButtonPress={onCreateCourse}
-							type='button'
-						/>
+						{addMode && (
+							<Button
+								buttonText='Create course'
+								onButtonPress={onCreateCourse}
+								type='button'
+							/>
+						)}
+						{updateMode && (
+							<Button
+								buttonText='Update course'
+								onButtonPress={onUpdateCourse}
+								type='button'
+							/>
+						)}
 					</div>
 				</div>
 				<label className='CreateCourseLabels'>Description</label>
@@ -127,16 +168,17 @@ function CreateCourse(props) {
 					className='CreateCourseTextArea'
 					placeholder='Enter description'
 					onChange={(event) => setDescCourse(event.target.value)}
-				></textarea>
+				>
+					{updateMode ? courseForUpdate[0].description : ''}
+				</textarea>
 				<Authors
-					itemsAuthors={props.itemAuthors}
-					AddAuthor={addAuthors}
 					onDurationChange={onDurationChange}
 					onAuthorsSelected={onAuthorsSelected}
+					durationValue={updateMode ? courseForUpdate[0].duration : ''}
 				/>
 			</div>
 		</div>
 	);
 }
 
-export default CreateCourse;
+export default CourseForm;

@@ -3,13 +3,31 @@ import '../../../../App.css';
 import Button from '../../../../common/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+//import { deleteCoursesAction } from '../../../../store/courses/actions';
+import { deleteCourse } from '../../../../store/courses/thunk';
 
 function CourseCard(props) {
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 
-	function showCourse(id) {
+	const dispatch = useDispatch();
+	const userInfo = useSelector((state) => state.users);
+	const role = userInfo.role;
+	const token = userInfo.token;
+
+	function onShowCourse(id) {
 		navigate(`/courses/${id}`);
 	}
+
+	function onUpdateCourse(id) {
+		navigate(`/courses/update/${id}`);
+	}
+
+	function onDeleteCourse(id) {
+		//dispatch(deleteCoursesAction(id));
+		deleteCourse(id, token)(dispatch);
+	}
+
 	return (
 		<div className='CourseCardMain'>
 			<div className='CourseCardTitleDesc'>
@@ -32,13 +50,25 @@ function CourseCard(props) {
 					{props.created}
 				</div>
 				<div className='CourseCardName'>
-					<div>
-						<Button
-							buttonText='Show course'
-							type='button'
-							onButtonPress={() => showCourse(props.id)}
-						/>
-					</div>
+					<Button
+						buttonText='Show course'
+						type='button'
+						onButtonPress={() => onShowCourse(props.id)}
+					/>
+					{role === 'ADMIN' && (
+						<div>
+							<Button
+								buttonText='Edit'
+								type='button'
+								onButtonPress={() => onUpdateCourse(props.id)}
+							/>
+							<Button
+								buttonText='Delete'
+								type='button'
+								onButtonPress={() => onDeleteCourse(props.id)}
+							/>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

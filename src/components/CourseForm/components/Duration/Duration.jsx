@@ -30,6 +30,7 @@ function Duration(props) {
 				placeholderText='Enter duration minutes...'
 				onChange={onInputText}
 				type='text'
+				value={props.value}
 			/>
 			<label className='CreateCourseDuration'>Duration: {duration}</label>
 		</div>
