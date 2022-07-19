@@ -8,21 +8,25 @@ import formatCreationDate from '../../helpers/formatCreationDate';
 import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 
-function Courses() {
-	const [courses, setCourses] = useState(useSelector((state) => state.courses));
+import { useDispatch, useSelector } from 'react-redux';
 
+function CoursesNew() {
+	//const [itemAuthors] = useState(props.itemAuthors);
+
+	const [itemAuthors] = useState();
 	let navigate = useNavigate();
-
-	let allCoursesItem = useSelector((state) => state.courses);
-
-	const itemAuthors = useSelector((state) => state.authors);
-
-	const isLogIn = useSelector((state) => state.users.isAuth);
+	const courses = useSelector((state) => state.courses);
+	const authors = useSelector((state) => state.authors);
 
 	function changeShowCreateCourse() {
+		//props.changeIsShowCreateCourse();
 		navigate(`/courses/add`);
+	}
+
+	function onSearchCourse(text) {
+		//props.onSearchCourses(text);
 	}
 
 	function getAuthorsByIds(arrayAuthors) {
@@ -41,39 +45,20 @@ function Courses() {
 		return resAuthors;
 	}
 
-	function onSearchCourse(text) {
-		let resArray = [];
-
-		if (text === '') {
-			setCourses(allCoursesItem);
-		} else {
-			if (courses) {
-				courses?.forEach((element) => {
-					const foundTitle = element.title.toLowerCase().indexOf(text, 0);
-					const foundId = element.id.toLowerCase().indexOf(text, 0);
-					if (foundTitle > -1 || foundId > -1) {
-						resArray.push(element);
-					}
-				});
-			}
-
-			if (resArray.length > 0) {
-				setCourses(resArray);
-			}
-		}
-	}
-
-	useEffect(() => {
-		//const currentToken = localStorage.getItem('courseUserToken');
-		//if (currentToken === null) {
-		if (isLogIn === false) {
+	/*useEffect(() => {
+		getCourses();
+		/*const currentToken = localStorage.getItem('courseUserToken');
+		if (currentToken === null) {
 			navigate(`/login`);
 		}
-	});
+	});*/
+
+	console.log('courses' + courses);
+	console.log('authors' + authors);
 
 	return (
 		<div>
-			<Header />
+			<Header isRegistration={false} userName={'Test'} />
 			<div className='CoursesMain'>
 				<div className='CoursesSearchAddCourse'>
 					<SearchBar onSearchCourse={onSearchCourse} />
@@ -94,7 +79,6 @@ function Courses() {
 						authors={getAuthorsByIds(item.authors)}
 						duration={getCourseDuration(item.duration)}
 						created={formatCreationDate(item.creationDate)}
-						index={index}
 					/>
 				))}
 			</div>
@@ -102,7 +86,7 @@ function Courses() {
 	);
 }
 
-Courses.propTypes = {
+CoursesNew.propTypes = {
 	itemAuthors: PropTypes.array,
 	userName: PropTypes.string,
 	//courseItems: PropTypes.object,
@@ -117,4 +101,8 @@ Courses.propTypes = {
 	}),*/
 };
 
-export default Courses;
+/*export default connect(({ courses }) => ({ courses: courses }), {
+	getCourses: getCoursesAction,
+})(CoursesNew);*/
+
+export default CoursesNew;

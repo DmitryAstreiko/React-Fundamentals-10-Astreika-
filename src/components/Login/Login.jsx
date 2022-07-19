@@ -4,14 +4,17 @@ import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Inpit';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
+import { useDispatch } from 'react-redux';
+import { loginUserAction } from '../../store/user/actions';
 
-export function Login(props) {
+export function Login() {
 	const [emailUser, setEmailUser] = useState(null);
 	const [passUser, setPassUser] = useState(null);
+
 	let navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	function handleClick() {
-		//navigate(`/invoices/${newInvoice.id}`);
 		navigate(`/registration`);
 	}
 
@@ -43,8 +46,8 @@ export function Login(props) {
 
 		if (result.successful === true) {
 			localStorage.setItem('courseUserToken', result.result);
+			dispatch(loginUserAction(result));
 			navigate(`/courses`);
-			props.userName(result.user.name);
 		} else {
 			alert('The username or password is incorrect');
 		}
@@ -52,7 +55,7 @@ export function Login(props) {
 
 	return (
 		<div>
-			<Header isRegistration={true} />
+			<Header />
 			<div className='FormMain'>
 				<form onSubmit={onSubmit} style={{ width: '350px' }}>
 					<p style={{ textAlign: 'center', fontSize: '22px' }}>
@@ -74,7 +77,7 @@ export function Login(props) {
 					/>
 
 					<p style={{ textAlign: 'center' }}>
-						<Button buttonText='Login' type='submit' />
+						<Button buttonText='Login' type='submit' id='1' />
 					</p>
 					<p style={{ textAlign: 'center' }}>
 						<label>

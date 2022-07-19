@@ -61,7 +61,7 @@ function Registration() {
 
 	return (
 		<div>
-			<Header isRegistration={true} />
+			<Header />
 			<div className='FormMain'>
 				<form onSubmit={onSubmit} style={{ width: '350px' }}>
 					<p style={{ textAlign: 'center', fontSize: '22px' }}>

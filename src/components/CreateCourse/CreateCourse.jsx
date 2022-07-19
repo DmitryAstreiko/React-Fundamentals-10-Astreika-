@@ -7,13 +7,16 @@ import { v4 as uuid } from 'uuid';
 import Moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
+import { addCoursesAction } from '../../store/courses/actions';
+import { useDispatch } from 'react-redux';
 
-function CreateCourse(props) {
+function CreateCourse() {
 	const [titleCourse, setTitleCourse] = useState(null);
 	const [descCourse, setDescCourse] = useState(null);
 	const [durCourse, setDurCourse] = useState(null);
 	const [authorsCourse, setAuthorsCourse] = useState(null);
 	let navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	function onAuthorsSelected(text) {
 		setAuthorsCourse(text);
@@ -27,7 +30,7 @@ function CreateCourse(props) {
 
 	function onCreateCourse() {
 		if (checkFields()) {
-			props.onCreateNewCourse(prepareCourse());
+			dispatch(addCoursesAction(prepareCourse()));
 			navigate(`/courses`);
 		}
 	}
@@ -88,18 +91,13 @@ function CreateCourse(props) {
 		return true;
 	}
 
-	function addAuthors(value) {
-		props.addNewAuthors(value);
-	}
-
 	function onCancelAdding() {
-		props.changeIsShowCreateCourse();
 		navigate(`/courses`);
 	}
 
 	return (
 		<div>
-			<Header userName={props.userName} />
+			<Header />
 			<div className='CreateCourseMain'>
 				<label className='CreateCourseLabels'>Title</label>
 				<div className='CreateCourseTitle'>
@@ -129,8 +127,6 @@ function CreateCourse(props) {
 					onChange={(event) => setDescCourse(event.target.value)}
 				></textarea>
 				<Authors
-					itemsAuthors={props.itemAuthors}
-					AddAuthor={addAuthors}
 					onDurationChange={onDurationChange}
 					onAuthorsSelected={onAuthorsSelected}
 				/>
