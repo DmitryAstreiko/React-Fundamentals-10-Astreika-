@@ -7,6 +7,7 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "jest": "^28.1.2",
     "moment": "^2.29.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -17,7 +18,6 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.1",
-    "save-dev": "^0.0.1-security",
     "uuidv4": "^6.2.13",
     "web-vitals": "^2.1.4"
   },
@@ -28,7 +28,7 @@
     "eject": "react-scripts eject",
     "test:nowatch": "react-scripts test --watchAll=false",
     "prepare": "husky install",
-    "prepublish": "npm run eslint:fix",
+    "prepublish": "npm run eslint:fix && npm run test:nowatch",
     "eslint": "eslint --ext .js --ext .jsx src",
     "eslint:fix": "eslint --fix --ext .js --ext .jsx src"
   },

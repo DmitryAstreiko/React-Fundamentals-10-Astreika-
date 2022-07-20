@@ -3,7 +3,6 @@ import '../../../../App.css';
 import Button from '../../../../common/Button/Button';
 import Input from '../../../../common/Input/Inpit';
 import { useDispatch } from 'react-redux';
-//import { addAuthorsAction } from '../../../../store/authors/actions';
 import { addAuthor } from '../../../../store/authors/thunk';
 import { useSelector } from 'react-redux';
 
@@ -16,7 +15,6 @@ function AddAuthor() {
 
 	function onAddAuthor() {
 		if (nameAuthor !== '') {
-			//dispatch(addAuthorsAction(nameAuthor));
 			const authorInfo = {
 				name: nameAuthor,
 			};

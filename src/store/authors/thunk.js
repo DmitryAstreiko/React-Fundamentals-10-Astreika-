@@ -5,7 +5,9 @@ export const loadAuthors = async (dispatch) => {
 		await fetch('http://localhost:4000/authors/all')
 			.then((Response) => Response.json())
 			.then((data) => dispatch(loadAuthorsAction(data.result)));
-	} catch (error) {}
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 export const addAuthor = (authorName, userToken) => async (dispatch) => {
@@ -24,5 +26,7 @@ export const addAuthor = (authorName, userToken) => async (dispatch) => {
 		if (result.successful) {
 			dispatch(addAuthorsAction(authorName));
 		}
-	} catch (error) {}
+	} catch (error) {
+		console.log(error);
+	}
 };

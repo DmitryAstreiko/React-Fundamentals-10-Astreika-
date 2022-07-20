@@ -4,7 +4,6 @@ import Button from '../../../../common/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-//import { deleteCoursesAction } from '../../../../store/courses/actions';
 import { deleteCourse } from '../../../../store/courses/thunk';
 
 function CourseCard(props) {
@@ -24,7 +23,6 @@ function CourseCard(props) {
 	}
 
 	function onDeleteCourse(id) {
-		//dispatch(deleteCoursesAction(id));
 		deleteCourse(id, token)(dispatch);
 	}
 
