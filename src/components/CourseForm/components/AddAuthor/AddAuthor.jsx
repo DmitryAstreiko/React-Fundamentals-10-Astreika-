@@ -19,7 +19,8 @@ function AddAuthor() {
 				name: nameAuthor,
 			};
 
-			addAuthor(authorInfo, token)(dispatch);
+			//addAuthor(authorInfo, token)(dispatch);
+			dispatch(addAuthor(authorInfo, token));
 		}
 	}
 

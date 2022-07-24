@@ -1,6 +1,6 @@
 import { loadAuthorsAction, addAuthorsAction } from './actions';
 
-export const loadAuthors = async (dispatch) => {
+export const loadAuthors = () => async (dispatch) => {
 	try {
 		await fetch('http://localhost:4000/authors/all')
 			.then((Response) => Response.json())

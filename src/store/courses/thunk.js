@@ -5,7 +5,21 @@ import {
 	updateCoursesAction,
 } from './actions';
 
-export const loadCourses = async (dispatch) => {
+/*export const loadCourses = async (dispatch) => {
+	try {
+		await fetch(`http://localhost:4000/courses/all`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+			.then((Response) => Response.json())
+			.then((data) => dispatch(loadCoursesAction(data.result)));
+	} catch (error) {
+		console.log(error);
+	}
+};*/
+
+export const loadCourses = () => async (dispatch) => {
 	try {
 		await fetch(`http://localhost:4000/courses/all`, {
 			headers: {

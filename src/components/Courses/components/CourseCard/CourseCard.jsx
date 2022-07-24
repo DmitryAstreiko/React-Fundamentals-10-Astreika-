@@ -23,7 +23,7 @@ function CourseCard(props) {
 	}
 
 	function onDeleteCourse(id) {
-		deleteCourse(id, token)(dispatch);
+		dispatch(deleteCourse(id, token));
 	}
 
 	return (

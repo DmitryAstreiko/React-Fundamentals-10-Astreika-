@@ -56,7 +56,7 @@ function CourseForm(props) {
 	function onUpdateCourse() {
 		if (checkFields()) {
 			const countBefore = allCourses.length;
-			updateCourse(props.courseForUpdate.id, prepareCourse(), token)(dispatch);
+			dispatch(updateCourse(props.courseForUpdate.id, prepareCourse(), token));
 			const countAfter = allCourses.length;
 			if (countAfter > countBefore) {
 				navigate(`/courses`);

@@ -9,6 +9,7 @@ import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import getAuthorsByIds from '../../helpers/getAuthorsByIds';
 
 function Courses() {
 	const navigate = useNavigate();
@@ -23,10 +24,10 @@ function Courses() {
 		navigate(`/courses/add`);
 	}
 
-	function getAuthorsByIds(arrayAuthors) {
+	/*function getAuthorsByIds(arrayAuthors, itemAuths) {
 		let resAuthors = null;
 		for (let authorId of arrayAuthors) {
-			for (let authorItem of itemAuthors) {
+			for (let authorItem of itemAuths) {
 				if (authorItem.id === authorId) {
 					if (resAuthors === null) {
 						resAuthors = authorItem.name;
@@ -37,7 +38,7 @@ function Courses() {
 			}
 		}
 		return resAuthors;
-	}
+	}*/
 
 	function onSearchCourse(text) {
 		let resArray = [];
@@ -89,7 +90,7 @@ function Courses() {
 						id={item.id}
 						title={item.title}
 						description={item.description}
-						authors={getAuthorsByIds(item.authors)}
+						authors={getAuthorsByIds(item.authors, itemAuthors)}
 						duration={getCourseDuration(item.duration)}
 						created={formatCreationDate(item.creationDate)}
 						index={index}
