@@ -4,9 +4,11 @@ import { Provider } from 'react-redux';
 import getCourseDuration from '../../../../../helpers/getCourseDuration';
 import formatCreationDate from '../../../../../helpers/formatCreationDate';
 import getAuthorsByIds from '../../../../../helpers/getAuthorsByIds';
+import { MemoryRouter } from 'react-router-dom';
+import { v4 as uuid } from 'uuid';
 
 const mockedState = {
-	user: {
+	users: {
 		isAuth: true,
 		name: 'Admin',
 		role: 'ADMIN',
@@ -43,58 +45,41 @@ const courseItem = {
 		'f762978b-61eb-4096-812b-ebde22838167',
 	],
 };
-/*
+
 const mockedStore = {
 	getState: () => mockedState,
 	subscribe: jest.fn(),
 	dispatch: jest.fn(),
 };
-/*
-render(
-	<Provider store={mockedStore}>
-		<CourseCard
-			key={courseItem.id}
-			id={courseItem.id}
-			title={courseItem.title}
-			description={courseItem.description}
-			authors={getAuthorsByIds(courseItem.authors, mockedState.authors)}
-			duration={getCourseDuration(courseItem.duration)}
-			created={formatCreationDate(courseItem.creationDate)}
-			index='1'
-		/>
-	</Provider>
-);
 
-expect(screen.getByText('JavaScript')).toBeInTheDocument();
-expect(screen.getByText('08.03.2022')).toBeInTheDocument();
-expect(
-	screen.getByText('Lorem Ipsum is simply dummy text of the ...')
-).toBeInTheDocument();
-expect(screen.getByText('02:40 hours')).toBeInTheDocument();
-expect(screen.getByText('Vasiliy Dobkin, Nicolas Kim')).toBeInTheDocument();
-*/
+describe('CourseCard', () => {
+	test('renders CourseCard component', () => {
+		const routeCourseId = `/courses/${uuid()}`;
+		render(
+			<Provider store={mockedStore}>
+				<MemoryRouter initialEntries={[routeCourseId]}>
+					<CourseCard
+						key={courseItem.id}
+						id={courseItem.id}
+						title={courseItem.title}
+						description={courseItem.description}
+						authors={getAuthorsByIds(courseItem.authors, mockedState.authors)}
+						duration={getCourseDuration(courseItem.duration)}
+						created={formatCreationDate(courseItem.creationDate)}
+						index='1'
+					/>
+				</MemoryRouter>
+			</Provider>
+		);
 
-//describe('CourseCard', () => {
-test('renders CourseCard component', () => {
-	render(
-		<CourseCard
-			key={courseItem.id}
-			id={courseItem.id}
-			title={courseItem.title}
-			description={courseItem.description}
-			authors={getAuthorsByIds(courseItem.authors, mockedState.authors)}
-			duration={getCourseDuration(courseItem.duration)}
-			created={formatCreationDate(courseItem.creationDate)}
-			index='1'
-		/>
-	);
-
-	expect(screen.queryByText('JavaScript')).toBeInTheDocument();
-	expect(screen.queryByText('08.03.2022')).toBeInTheDocument();
-	expect(
-		screen.queryByText('Lorem Ipsum is simply dummy text of the ...')
-	).toBeInTheDocument();
-	expect(screen.queryByText('02:40 hours')).toBeInTheDocument();
-	expect(screen.queryByText('Vasiliy Dobkin, Nicolas Kim')).toBeInTheDocument();
+		expect(screen.queryByText('JavaScript')).toBeInTheDocument();
+		expect(screen.queryByText('03.08.2021')).toBeInTheDocument();
+		expect(
+			screen.queryByText('Lorem Ipsum is simply dummy text of the ...')
+		).toBeInTheDocument();
+		expect(screen.queryByText('02:40 hours')).toBeInTheDocument();
+		expect(
+			screen.queryByText('Vasiliy Dobkin, Nicolas Kim')
+		).toBeInTheDocument();
+	});
 });
-//});

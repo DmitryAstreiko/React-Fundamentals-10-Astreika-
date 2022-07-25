@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import Header from '../Header';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 
 const mockedState = {
-	user: {
+	users: {
 		isAuth: true,
 		name: 'Admin',
 	},
@@ -17,10 +18,18 @@ const mockedStore = {
 	dispatch: jest.fn(),
 };
 
-render(
-	<Provider store={mockedStore}>
-		<Header />
-	</Provider>
-);
+describe('Header', () => {
+	test('renders Header component', () => {
+		const route = '/login';
 
-expect(screen.queryByText('Admin')).toBeInTheDocument();
+		render(
+			<Provider store={mockedStore}>
+				<MemoryRouter initialEntries={[route]}>
+					<Header />
+				</MemoryRouter>
+			</Provider>
+		);
+
+		expect(screen.queryByText('Admin')).toBeInTheDocument();
+	});
+});
