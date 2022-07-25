@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../../../../App.css';
 import AddAuthor from '../AddAuthor/AddAuthor';
 import Duration from '../Duration/Duration';
 import AuthorItem from '../AuthorItem/AuthorItem';
+import { useSelector } from 'react-redux';
 
 function Authors(props) {
-	const [allAuthors, setAuthors] = useState(props.itemsAuthors);
 	const [selectedAuthors, setSelectedAuthors] = useState([]);
-	const [abilityAuthors, setAbilityAuthors] = useState(props.itemsAuthors);
+	const [abilityAuthors, setAbilityAuthors] = useState(
+		useSelector((state) => state.authors)
+	);
+
+	let allAuthors = useSelector((state) => state.authors);
 
 	function onDuration(text) {
 		props.onDurationChange(text);
@@ -65,22 +69,27 @@ function Authors(props) {
 		props.onAuthorsSelected(tempSelectedAuthors);
 	}
 
-	function onAddAuthor(value) {
-		props.AddAuthor(value);
-	}
+	/*useEffect(() => {
+		//setAuthors(props.itemsAuthors);
+		let tempSelectedAuthors = [];
+		//tempSelectedAuthors.push(...selectedAuthors);
 
-	useEffect(() => {
-		setAuthors(props.itemsAuthors);
+		if (allAuthors) {
+			allAuthors?.forEach((element) => {
+				let resFilter = selectedAuthors.filter((x) => x.id === element);
+				if (resFilter) {
+					tempSelectedAuthors.push(...resFilter);
+				}
+			});
+		}
 
-		let tempAuthors = [];
-		tempAuthors.push(...allAuthors);
-		setAbilityAuthors(tempAuthors);
-	}, [props.itemsAuthors, allAuthors]);
+		setAbilityAuthors(tempSelectedAuthors);
+	}, [selectedAuthors, allAuthors]);*/
 
 	return (
 		<div className='AuthorsMain'>
 			<div className='AuthorsAddAndDuration'>
-				<AddAuthor itemsAuthors={allAuthors} onAddAuthors={onAddAuthor} />
+				<AddAuthor />
 				<Duration onDuration={onDuration} />
 			</div>
 			<div className='AuthorsListAndDelete'>
