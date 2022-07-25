@@ -3,24 +3,29 @@ import '../../../../App.css';
 import Button from '../../../../common/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { deleteCoursesAction } from '../../../../store/courses/actions';
+import { useDispatch, useSelector } from 'react-redux';
+//import { deleteCoursesAction } from '../../../../store/courses/actions';
+import { deleteCourse } from '../../../../store/courses/thunk';
 
 function CourseCard(props) {
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 
 	const dispatch = useDispatch();
+	const userInfo = useSelector((state) => state.users);
+	const role = userInfo.role;
+	const token = userInfo.token;
 
-	function showCourse(id) {
+	function onShowCourse(id) {
 		navigate(`/courses/${id}`);
 	}
 
-	function editCourse(id) {
-		navigate(`/courses`);
+	function onUpdateCourse(id) {
+		navigate(`/courses/update/${id}`);
 	}
 
-	function deleteCourse(id) {
-		dispatch(deleteCoursesAction(id));
+	function onDeleteCourse(id) {
+		//dispatch(deleteCoursesAction(id));
+		deleteCourse(id, token)(dispatch);
 	}
 
 	return (
@@ -45,23 +50,25 @@ function CourseCard(props) {
 					{props.created}
 				</div>
 				<div className='CourseCardName'>
-					<div>
-						<Button
-							buttonText='Show course'
-							type='button'
-							onButtonPress={() => showCourse(props.id)}
-						/>
-						<Button
-							buttonText='Edit'
-							type='button'
-							onButtonPress={() => editCourse(props.id)}
-						/>
-						<Button
-							buttonText='Delete'
-							type='button'
-							onButtonPress={() => deleteCourse(props.id)}
-						/>
-					</div>
+					<Button
+						buttonText='Show course'
+						type='button'
+						onButtonPress={() => onShowCourse(props.id)}
+					/>
+					{role === 'ADMIN' && (
+						<div>
+							<Button
+								buttonText='Edit'
+								type='button'
+								onButtonPress={() => onUpdateCourse(props.id)}
+							/>
+							<Button
+								buttonText='Delete'
+								type='button'
+								onButtonPress={() => onDeleteCourse(props.id)}
+							/>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

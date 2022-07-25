@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import '../../App.css';
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Inpit';
-import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import { useDispatch } from 'react-redux';
 import { loginUserAction } from '../../store/user/actions';
+import { Link, useNavigate } from 'react-router-dom';
+import { loadUser } from '../../store/user/thunk';
+import { useSelector } from 'react-redux';
 
 export function Login() {
 	const [emailUser, setEmailUser] = useState(null);
 	const [passUser, setPassUser] = useState(null);
 
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	function handleClick() {
-		navigate(`/registration`);
-	}
+	const user = useSelector((state) => state.users);
 
 	function onChangeEmail(text) {
 		setEmailUser(text);
@@ -29,14 +29,14 @@ export function Login() {
 	async function onSubmit(event) {
 		event.preventDefault();
 
-		const newUser = {
+		const credUser = {
 			password: passUser,
 			email: emailUser,
 		};
 
 		const response = await fetch('http://localhost:4000/login', {
 			method: 'POST',
-			body: JSON.stringify(newUser),
+			body: JSON.stringify(credUser),
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -44,6 +44,13 @@ export function Login() {
 
 		const result = await response.json();
 
+		/*const response = loadUser(User);
+
+		const result = await response.json();*/
+
+		//loadUser(credUser);
+
+		//if (user.isAuth) {
 		if (result.successful === true) {
 			localStorage.setItem('courseUserToken', result.result);
 			dispatch(loginUserAction(result));
@@ -83,9 +90,7 @@ export function Login() {
 						<label>
 							If you not have an account you can{' '}
 							<b>
-								<label onClick={handleClick}>
-									<b>Registration</b>
-								</label>
+								<Link to='/registration'>Registration</Link>
 							</b>
 						</label>
 					</p>

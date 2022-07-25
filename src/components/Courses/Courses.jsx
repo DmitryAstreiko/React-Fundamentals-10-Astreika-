@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import '../../App.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import CourseCard from './components/CourseCard/CourseCard';
@@ -8,18 +8,22 @@ import formatCreationDate from '../../helpers/formatCreationDate';
 import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+//import { loadCourses } from '../../store/courses/thunk';
 import { useSelector } from 'react-redux';
+//import { loadAuthors } from '../../store/authors/thunk';
 
 function Courses() {
-	const [courses, setCourses] = useState(useSelector((state) => state.courses));
+	//const [courses, setCourses] = useState(useSelector((state) => state.courses));
 
-	let navigate = useNavigate();
+	const navigate = useNavigate();
+	//const dispatch = useDispatch();
 
-	let allCoursesItem = useSelector((state) => state.courses);
-
+	const allCoursesItem = useSelector((state) => state.courses);
+	let courses = useSelector((state) => state.courses);
 	const itemAuthors = useSelector((state) => state.authors);
-
-	const isLogIn = useSelector((state) => state.users.isAuth);
+	const userInfo = useSelector((state) => state.users);
+	const isLogIn = userInfo.isAuth;
+	const userRole = userInfo.role;
 
 	function changeShowCreateCourse() {
 		navigate(`/courses/add`);
@@ -45,7 +49,7 @@ function Courses() {
 		let resArray = [];
 
 		if (text === '') {
-			setCourses(allCoursesItem);
+			courses = allCoursesItem;
 		} else {
 			if (courses) {
 				courses?.forEach((element) => {
@@ -58,17 +62,21 @@ function Courses() {
 			}
 
 			if (resArray.length > 0) {
-				setCourses(resArray);
+				//setCourses(resArray);
+				courses = resArray;
 			}
 		}
 	}
 
 	useEffect(() => {
-		//const currentToken = localStorage.getItem('courseUserToken');
-		//if (currentToken === null) {
 		if (isLogIn === false) {
 			navigate(`/login`);
-		}
+		} /*else {
+			loadCourses(dispatch);
+
+			
+			loadAuthors(dispatch);
+		}*/
 	});
 
 	return (
@@ -77,13 +85,15 @@ function Courses() {
 			<div className='CoursesMain'>
 				<div className='CoursesSearchAddCourse'>
 					<SearchBar onSearchCourse={onSearchCourse} />
-					<div>
-						<Button
-							buttonText='Add new course'
-							onButtonPress={changeShowCreateCourse}
-							type='button'
-						/>
-					</div>
+					{userRole === 'ADMIN' && (
+						<div>
+							<Button
+								buttonText='Add new course'
+								onButtonPress={changeShowCreateCourse}
+								type='button'
+							/>
+						</div>
+					)}
 				</div>
 				{courses.map((item, index) => (
 					<CourseCard

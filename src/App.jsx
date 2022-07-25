@@ -1,14 +1,17 @@
 import './App.css';
 import React, { useEffect } from 'react';
 import Courses from './components/Courses/Courses';
-import CreateCourse from './components/CreateCourse/CreateCourse';
+import CourseForm from './components/CourseForm/CourseForm';
 import Registration from './components/Registration/Registration';
 import { Login } from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useParams } from 'react-router';
+import { loadCourses } from './store/courses/thunk';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadCourses, loadAuthors } from './service';
+import { loadAuthors } from './store/authors/thunk';
+import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
+import { loadUserMe } from './store/user/thunk';
 
 function App() {
 	let allCoursesItem = useSelector((state) => state.courses);
@@ -46,15 +49,47 @@ function App() {
 		return <CourseInfo courseItem={courseItem} courseAuthors={courseAuthors} />;
 	}
 
+	function GoToUpdateCourse() {
+		const params = useParams();
+
+		const courseItem = getCurrentCourse(params.courseId);
+
+		return <CourseForm updateMode='true' course={courseItem} />;
+	}
+
+	function UserMe() {
+		let userInfo = useSelector((state) => state.users);
+		const token = localStorage.getItem('courseUserToken');
+		if (token) {
+			loadUserMe(token)(dispatch);
+
+			if (userInfo.isAuth) {
+				return <Courses />;
+			} else {
+				return <Login />;
+			}
+		}
+	}
+
 	return (
 		<BrowserRouter>
 			<Routes>
 				<Route path='/' element={<Login />} />
-				<Route path='registration' element={<Registration />} />
-				<Route path='login' element={<Login />} />
-				<Route path='courses/:courseId' element={<GoToCourse />} />
-				<Route path='courses/add' element={<CreateCourse />} />
-				<Route path='courses' element={<Courses />} />
+				<Route path='/registration' element={<Registration />} />
+				<Route path='/login' element={<Login />} />
+				<Route path='/courses/:courseId' element={<GoToCourse />} />
+				<Route path='/courses' element={<Courses />} />
+				<Route path='/users/me' element={<UserMe />} />
+				<Route
+					path='/courses/add'
+					element={
+						<PrivateRoute>{<CourseForm addMode='true' />} </PrivateRoute>
+					}
+				/>
+				<Route
+					path='/courses/update/:courseId'
+					element={<PrivateRoute>{<GoToUpdateCourse />} </PrivateRoute>}
+				/>
 			</Routes>
 		</BrowserRouter>
 	);
