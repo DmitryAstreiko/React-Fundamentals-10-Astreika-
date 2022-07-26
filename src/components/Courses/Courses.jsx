@@ -88,16 +88,16 @@ function Courses() {
 Courses.propTypes = {
 	itemAuthors: PropTypes.array,
 	userName: PropTypes.string,
-	//courseItems: PropTypes.object,
+	courseItems: PropTypes.object,
 
-	courseItems: React.PropTypes.shape({
+	/*courseItems: React.PropTypes.shape({
 		id: React.PropTypes.string,
 		title: React.PropTypes.string,
 		description: React.PropTypes.string,
 		duration: React.PropTypes.string,
 		creationDate: React.PropTypes.string,
 		authors: React.PropTypes.string,
-	}),
+	}),*/
 };
 
 export default Courses;
