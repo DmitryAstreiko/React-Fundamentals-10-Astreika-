@@ -24,18 +24,7 @@ function Registration() {
 		setEmailUser(text);
 	}
 
-	function chekingFields() {
-		console.log(loginUser);
-		if (loginUser === null) {
-			alert('Please, fill the field "Name"');
-			return false;
-		}
-
-		return true;
-	}
-
 	async function onSubmit(event) {
-		//if (chekingFields) {
 		event.preventDefault();
 
 		const newUser = {
@@ -44,22 +33,11 @@ function Registration() {
 			email: emailUser,
 		};
 
-		/*const response = await fetch('http://localhost:4000/register', {
-			method: 'POST',
-			body: JSON.stringify(newUser),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-
-		const result = await response.json();*/
-
 		const result = loadUser(newUser);
 
 		if (result.successful === true) {
 			navigate(`/login`);
 		}
-		//}
 	}
 
 	return (

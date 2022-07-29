@@ -108,12 +108,6 @@
     margin: 10px;
 }
 
-/*.InputSearch {
-    height: 24px;
-    border: 2px solid #d6c91b;
-    width: 100%;
-}*/
-
 .SearchBarMain {
     display: flex;
     align-items: flex-start;   
@@ -150,12 +144,6 @@
     border: 2px solid #2e1bd6;
     margin: 10px;
 }
-/*.InputCreateCourseName {
-    height: 24px;
-    border: 2px solid #d6c91b;
-    width: 25%;
-    margin: 10px;
-}*/
 
 .CreateCourseTitle {
     display: flex;

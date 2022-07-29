@@ -20,8 +20,10 @@ function App() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		loadCourses(dispatch);
-		loadAuthors(dispatch);
+		//loadCourses(dispatch);
+		dispatch(loadCourses());
+		//loadAuthors(dispatch);
+		dispatch(loadAuthors());
 	}, []);
 
 	function getCurrentAuthors(courseAuthors) {
@@ -61,7 +63,7 @@ function App() {
 		let userInfo = useSelector((state) => state.users);
 		const token = localStorage.getItem('courseUserToken');
 		if (token) {
-			loadUserMe(token)(dispatch);
+			dispatch(loadUserMe(token));
 
 			if (userInfo.isAuth) {
 				return <Courses />;

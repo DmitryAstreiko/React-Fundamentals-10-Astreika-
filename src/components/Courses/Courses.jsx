@@ -8,16 +8,11 @@ import formatCreationDate from '../../helpers/formatCreationDate';
 import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-//import { loadCourses } from '../../store/courses/thunk';
 import { useSelector } from 'react-redux';
-//import { loadAuthors } from '../../store/authors/thunk';
+import getAuthorsByIds from '../../helpers/getAuthorsByIds';
 
 function Courses() {
-	//const [courses, setCourses] = useState(useSelector((state) => state.courses));
-
 	const navigate = useNavigate();
-	//const dispatch = useDispatch();
-
 	const allCoursesItem = useSelector((state) => state.courses);
 	let courses = useSelector((state) => state.courses);
 	const itemAuthors = useSelector((state) => state.authors);
@@ -27,22 +22,6 @@ function Courses() {
 
 	function changeShowCreateCourse() {
 		navigate(`/courses/add`);
-	}
-
-	function getAuthorsByIds(arrayAuthors) {
-		let resAuthors = null;
-		for (let authorId of arrayAuthors) {
-			for (let authorItem of itemAuthors) {
-				if (authorItem.id === authorId) {
-					if (resAuthors === null) {
-						resAuthors = authorItem.name;
-					} else {
-						resAuthors = resAuthors.concat(', ').concat(authorItem.name);
-					}
-				}
-			}
-		}
-		return resAuthors;
 	}
 
 	function onSearchCourse(text) {
@@ -62,7 +41,6 @@ function Courses() {
 			}
 
 			if (resArray.length > 0) {
-				//setCourses(resArray);
 				courses = resArray;
 			}
 		}
@@ -71,12 +49,7 @@ function Courses() {
 	useEffect(() => {
 		if (isLogIn === false) {
 			navigate(`/login`);
-		} /*else {
-			loadCourses(dispatch);
-
-			
-			loadAuthors(dispatch);
-		}*/
+		}
 	});
 
 	return (
@@ -101,7 +74,7 @@ function Courses() {
 						id={item.id}
 						title={item.title}
 						description={item.description}
-						authors={getAuthorsByIds(item.authors)}
+						authors={getAuthorsByIds(item.authors, itemAuthors)}
 						duration={getCourseDuration(item.duration)}
 						created={formatCreationDate(item.creationDate)}
 						index={index}
@@ -115,7 +88,7 @@ function Courses() {
 Courses.propTypes = {
 	itemAuthors: PropTypes.array,
 	userName: PropTypes.string,
-	//courseItems: PropTypes.object,
+	courseItems: PropTypes.object,
 
 	/*courseItems: React.PropTypes.shape({
 		id: React.PropTypes.string,

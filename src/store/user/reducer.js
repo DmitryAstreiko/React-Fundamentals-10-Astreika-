@@ -6,7 +6,6 @@ const userInitialState = {
 	email: null, // default value - empty string. After success login - email of user
 	token: null, // default value - empty string or token value from localStorage.
 	role: null,
-	// After success login - value from API /login response. See Swagger.
 };
 
 export const userReducer = (state = userInitialState, action) => {

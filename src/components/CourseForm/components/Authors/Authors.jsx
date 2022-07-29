@@ -6,9 +6,6 @@ import AuthorItem from '../AuthorItem/AuthorItem';
 import { useSelector } from 'react-redux';
 
 function Authors(props) {
-	//const [selectedAuthors, setSelectedAuthors] = useState([]);
-	//const [abilityAuthors, setAbilityAuthors] = useState(useSelector((state) => state.authors));
-
 	let selectedAuthors = [];
 	let abilityAuthors = useSelector((state) => state.authors);
 
@@ -34,12 +31,10 @@ function Authors(props) {
 				name: tempSelectedAuthors[indexSelectedId].name,
 			});
 
-			//setAbilityAuthors(tempAbilityAuthors);
 			abilityAuthors = tempAbilityAuthors;
 
 			tempSelectedAuthors.splice(indexSelectedId, 1);
 
-			//setSelectedAuthors(tempSelectedAuthors);
 			selectedAuthors = tempSelectedAuthors;
 		}
 	}
@@ -63,34 +58,15 @@ function Authors(props) {
 					if (indexAbilityId > -1) {
 						tempAbilityAuthors.splice(indexAbilityId, 1);
 
-						//setAbilityAuthors(tempAbilityAuthors);
 						abilityAuthors = tempAbilityAuthors;
 					}
 				}
 			});
 		}
-		//setSelectedAuthors(tempSelectedAuthors);
 		selectedAuthors = tempSelectedAuthors;
 
 		props.onAuthorsSelected(tempSelectedAuthors);
 	}
-
-	/*useEffect(() => {
-		//setAuthors(props.itemsAuthors);
-		let tempSelectedAuthors = [];
-		//tempSelectedAuthors.push(...selectedAuthors);
-
-		if (allAuthors) {
-			allAuthors?.forEach((element) => {
-				let resFilter = selectedAuthors.filter((x) => x.id === element);
-				if (resFilter) {
-					tempSelectedAuthors.push(...resFilter);
-				}
-			});
-		}
-
-		setAbilityAuthors(tempSelectedAuthors);
-	}, [selectedAuthors, allAuthors]);*/
 
 	return (
 		<div className='AuthorsMain'>

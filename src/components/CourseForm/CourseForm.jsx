@@ -3,11 +3,8 @@ import '../../App.css';
 import Button from '../../common/Button/Button';
 import Authors from './components/Authors/Authors';
 import Input from '../../common/Input/Inpit';
-//import { v4 as uuid } from 'uuid';
-//import Moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
-//import { addCoursesAction } from '../../store/courses/actions';
 import { addCourse, updateCourse } from '../../store/courses/thunk';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -29,8 +26,6 @@ function CourseForm(props) {
 	const courseForUpdate = props.course;
 
 	useEffect(() => {
-		//const currentToken = localStorage.getItem('courseUserToken');
-		//if (currentToken === null) {
 		if (isLogIn === false) {
 			navigate(`/login`);
 		}
@@ -48,9 +43,9 @@ function CourseForm(props) {
 
 	function onCreateCourse() {
 		if (checkFields()) {
-			//dispatch(addCoursesAction(prepareCourse()));
 			const countBefore = allCourses.length;
-			addCourse(prepareCourse(), token)(dispatch);
+			//addCourse(prepareCourse(), token)(dispatch);
+			dispatch(addCourse(prepareCourse(), token));
 			const countAfter = allCourses.length;
 			if (countAfter > countBefore) {
 				navigate(`/courses`);
@@ -60,9 +55,8 @@ function CourseForm(props) {
 
 	function onUpdateCourse() {
 		if (checkFields()) {
-			//dispatch(addCoursesAction(prepareCourse()));
 			const countBefore = allCourses.length;
-			updateCourse(props.courseForUpdate.id, prepareCourse(), token)(dispatch);
+			dispatch(updateCourse(props.courseForUpdate.id, prepareCourse(), token));
 			const countAfter = allCourses.length;
 			if (countAfter > countBefore) {
 				navigate(`/courses`);
@@ -79,10 +73,8 @@ function CourseForm(props) {
 		}
 
 		const course = {
-			//id: uuid(),
 			title: titleCourse,
 			description: descCourse,
-			//creationDate: Moment().format('MM/DD/YYYY'),
 			duration: parseInt(durCourse),
 			authors: authorsId,
 		};

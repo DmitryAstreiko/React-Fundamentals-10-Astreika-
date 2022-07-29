@@ -7,10 +7,6 @@ function Duration(props) {
 	const [duration, setDuration] = useState('00:00 hour');
 
 	function onInputText(text) {
-		//const isInteger = /^[0-9]+$/;
-		//if (text === '' || isInteger.test(text)) {
-		//}
-
 		if (!text) {
 			setDuration('00:00 hour');
 			props.onDuration('0');

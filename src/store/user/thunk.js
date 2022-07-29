@@ -9,9 +9,11 @@ export const loadUser = (User) => async (dispatch) => {
 				'Content-Type': 'application/json',
 			},
 		})
-			.then((Response) => Response.json())
+			.then((response) => response.json())
 			.then((data) => dispatch(loginUserAction(data)));
-	} catch (error) {}
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 export const logoutUser = (token) => async (dispatch) => {
@@ -23,9 +25,10 @@ export const logoutUser = (token) => async (dispatch) => {
 				Authorization: token,
 			},
 		});
-		//const result = await response.json();
 		dispatch(logoutUserAction());
-	} catch (error) {}
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 export const loadUserMe = (token) => async (dispatch) => {
@@ -37,7 +40,9 @@ export const loadUserMe = (token) => async (dispatch) => {
 				Authorization: token,
 			},
 		})
-			.then((Response) => Response.json())
+			.then((response) => response.json())
 			.then((data) => dispatch(UserMeAction(data)));
-	} catch (error) {}
+	} catch (error) {
+		console.log(error);
+	}
 };

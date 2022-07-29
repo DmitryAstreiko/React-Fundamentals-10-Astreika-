@@ -5,7 +5,7 @@ import {
 	updateCoursesAction,
 } from './actions';
 
-export const loadCourses = async (dispatch) => {
+/*export const loadCourses = async (dispatch) => {
 	try {
 		await fetch(`http://localhost:4000/courses/all`, {
 			headers: {
@@ -14,22 +14,24 @@ export const loadCourses = async (dispatch) => {
 		})
 			.then((Response) => Response.json())
 			.then((data) => dispatch(loadCoursesAction(data.result)));
-	} catch (error) {}
-};
+	} catch (error) {
+		console.log(error);
+	}
+};*/
 
-/*export const deleteCourse = (courseId, userToken) => async (dispatch) => {
+export const loadCourses = () => async (dispatch) => {
 	try {
-		await fetch(`http://localhost:4000/courses/${courseId}`, {
-			method: 'PATCH',
+		await fetch(`http://localhost:4000/courses/all`, {
 			headers: {
 				'Content-Type': 'application/json',
-				authorization: userToken,
 			},
 		})
 			.then((Response) => Response.json())
-			.then((data) => dispatch(deleteCoursesAction(data.result)));
-	} catch (error) {}
-};*/
+			.then((data) => dispatch(loadCoursesAction(data.result)));
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 export const deleteCourse = (courseId, userToken) => async (dispatch) => {
 	try {
@@ -46,7 +48,9 @@ export const deleteCourse = (courseId, userToken) => async (dispatch) => {
 		if (result.successful) {
 			dispatch(deleteCoursesAction(courseId));
 		}
-	} catch (error) {}
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 export const addCourse = (courseInfo, userToken) => async (dispatch) => {
@@ -70,6 +74,27 @@ export const addCourse = (courseInfo, userToken) => async (dispatch) => {
 	}
 };
 
+/*export const addCourse = (courseInfo, userToken) => async (dispatch) => {
+	try {
+		const response = await fetch(`http://localhost:4000/courses/add`, {
+			method: 'POST',
+			body: JSON.stringify(courseInfo),
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: userToken,
+			},
+		});
+
+		const result = await response.json();
+
+		if (result.successful) {
+			dispatch(addCoursesAction(courseInfo));
+		}
+	} catch (error) {
+		console.log(error);
+	}
+};*/
+
 export const updateCourse =
 	(courseId, courseInfo, userToken) => async (dispatch) => {
 		try {
@@ -90,5 +115,7 @@ export const updateCourse =
 			if (result.successful) {
 				dispatch(updateCoursesAction(courseInfo));
 			}
-		} catch (error) {}
+		} catch (error) {
+			console.log(error);
+		}
 	};

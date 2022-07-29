@@ -6,8 +6,6 @@ import Header from '../Header/Header';
 import { useDispatch } from 'react-redux';
 import { loginUserAction } from '../../store/user/actions';
 import { Link, useNavigate } from 'react-router-dom';
-import { loadUser } from '../../store/user/thunk';
-import { useSelector } from 'react-redux';
 
 export function Login() {
 	const [emailUser, setEmailUser] = useState(null);
@@ -15,8 +13,6 @@ export function Login() {
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-
-	const user = useSelector((state) => state.users);
 
 	function onChangeEmail(text) {
 		setEmailUser(text);
@@ -44,13 +40,6 @@ export function Login() {
 
 		const result = await response.json();
 
-		/*const response = loadUser(User);
-
-		const result = await response.json();*/
-
-		//loadUser(credUser);
-
-		//if (user.isAuth) {
 		if (result.successful === true) {
 			localStorage.setItem('courseUserToken', result.result);
 			dispatch(loginUserAction(result));
